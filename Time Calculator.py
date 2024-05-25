@@ -6,7 +6,7 @@ def pad_time(string, padding=2):
     return string[-2:]
 
 
-def add_time(start, duration, day=None):
+def add_time(start, duration, start_day=None):
     start = start.split(" ")
     start_time = start[0].split(":")
     start_hour = int(start_time[0])
@@ -41,13 +41,16 @@ def add_time(start, duration, day=None):
     new_time = f"{end_hour}:{pad_time(end_min)} {meridian}"
 
     # optional day of the week
-    if day:
+    if start_day:
         lower_case_key = [day.lower() for day in key]
-        start_day_index = lower_case_key.index(day.lower())
-        print(lower_case_key, start_day_index)
+        start_day_index = lower_case_key.index(start_day.lower())
         days_to_add = carried_days % 7
-        # doesn't wrap > 7 (6)
-        end_day = key[start_day_index + days_to_add]
+        end_day_index = (
+            start_day_index + days_to_add
+            if start_day_index + days_to_add < 7
+            else start_day_index + days_to_add - 7
+        )  # to wrap if > 7
+        end_day = key[end_day_index]
         new_time += f", {end_day}"
 
     # days later
@@ -60,6 +63,6 @@ def add_time(start, duration, day=None):
     return new_time
 
 
-result = add_time("11:59 PM", "24:05", "saturDay")
+result = add_time("2:59 AM", "24:00", "saturDay")
 
 print(result)
