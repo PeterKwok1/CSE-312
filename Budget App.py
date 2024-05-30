@@ -4,7 +4,26 @@ class Category:
         self.ledger = []
 
     def __str__(self) -> str:
-        pass
+        entries_str = ""
+
+        # add title
+        padding = "*" * int((30 - len(self.name)) / 2)
+        title = f"{padding}{self.name}{padding}\n"
+        entries_str += title
+
+        # add entries
+        for entry in self.ledger:
+            description = entry["description"][:23]
+            amount = f"{entry['amount']:.2f}"  # .2f = round float to two decimal places
+            line = f"{description}{amount:>{30 - len(description)}}\n"
+            entries_str += line
+
+        # add net
+
+        net = f"Total: {self.get_balance()}"
+        entries_str += net
+
+        return entries_str
 
     def deposit(self, amount, description=""):
         entry = {"amount": amount, "description": description}
@@ -23,10 +42,7 @@ class Category:
         return net
 
     def transfer(self, amount, partner):
-        if self.check_funds(
-            amount
-        ):  # could just check return of self.withdraw but fcc directions
-            self.withdraw(amount, f"Transfer to {partner.name}")
+        if self.withdraw(amount, f"Transfer to {partner.name}"):
             partner.deposit(amount, f"Transfer from {self.name}")
             return True
         return False
@@ -49,8 +65,51 @@ clothing.deposit(30, "for shirts")
 clothing.withdraw(10, "shirts")
 
 food.transfer(10, clothing)
-print(food.ledger, "\n", clothing.ledger)
 
 
 def create_spend_chart(categories):
-    pass
+    bar_str = ""
+
+    # add title
+    title = "Percentage spent by category\n"
+    bar_str += title
+
+    # add chart
+    # x axis values
+    # percentage of withdrawls from total withdrawls
+    # I think their design considers withdrawls as a result of transfers as spent money
+    withdrawls = []
+    total_withdrawls = 0
+
+    for category in categories:
+        category_withdrawls = 0
+
+        for entry in category.ledger:
+            if entry["amount"] < 0:
+                category_withdrawls += entry["amount"]
+
+        withdrawls.append((category.name, category_withdrawls))
+        total_withdrawls += category_withdrawls
+
+    withdrawl_percentages = [  # convert to %
+        (category[0], category[1] / total_withdrawls * 100) for category in withdrawls
+    ]
+
+    # y axis
+    y_axis = list(range(0, 101, 10))
+
+    # nested for loop
+    # round down and compare x // y != 0
+    # ex:
+    # flt = 33.33333
+    # value = 40
+    # print(flt // value)
+
+    # add divider
+
+    # add labels
+
+    return bar_str
+
+
+create_spend_chart([food, clothing])
