@@ -1,29 +1,49 @@
 
-# Time Calculator
+# Budget App
 
-Calculates time from starting point with optional day of the week. 
+Description
 
+Example
 ```
-add_time('3:00 PM', '3:10')
-# Returns: 6:10 PM
+food = Category("Food")
+food.deposit(1000, "deposit")
+food.withdraw(10.15, "groceries")
+food.withdraw(15.89, "restaurant and more food for dessert")
+clothing = Category("Clothing")
+food.transfer(50, clothing)
+print(food)
 
-add_time('11:30 AM', '2:32', 'Monday')
-# Returns: 2:02 PM, Monday
+*************Food*************
+initial deposit        1000.00
+groceries               -10.15
+restaurant and more foo -15.89
+Transfer to Clothing    -50.00
+Total: 923.96
 
-add_time('11:43 AM', '00:20')
-# Returns: 12:03 PM
-
-add_time('10:10 PM', '3:30')
-# Returns: 1:40 AM (next day)
-
-add_time('11:43 PM', '24:20', 'tueSday')
-# Returns: 12:03 AM, Thursday (2 days later)
-
-add_time('6:30 PM', '205:12')
-# Returns: 7:42 AM (9 days later)
+Percentage spent by category
+100|          
+ 90|          
+ 80|          
+ 70|          
+ 60| o        
+ 50| o        
+ 40| o        
+ 30| o        
+ 20| o  o     
+ 10| o  o  o  
+  0| o  o  o  
+    ----------
+     F  C  A  
+     o  l  u  
+     o  o  t  
+     d  t  o  
+        h     
+        i     
+        n     
+        g     
 ```
 
-For the purpose of reviewing python to follow coursework. 
+For the purpose of reviewing python to follow cse 312. 
 
 
 
