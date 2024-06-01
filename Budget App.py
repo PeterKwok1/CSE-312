@@ -56,17 +56,6 @@ class Category:
             return True
 
 
-food = Category("food")
-food.deposit(50, "for veges")
-food.withdraw(10, "veges")
-
-clothing = Category("clothing")
-clothing.deposit(30, "for shirts")
-clothing.withdraw(10, "shirts")
-
-food.transfer(10, clothing)
-
-
 def create_spend_chart(categories):
     bar_str = ""
 
@@ -76,7 +65,7 @@ def create_spend_chart(categories):
 
     # chart
     # percentage of withdrawls from total withdrawls
-    # I think their design considers withdrawls as a result of transfers as spent money
+    # their design considers withdrawls as a result of transfers as spent money
 
     # values
     withdrawls = []
@@ -107,27 +96,48 @@ def create_spend_chart(categories):
         for category in withdrawl_percentages:
             if (
                 y != 0
-            ):  # i do not know why they made 0 a value on the chart and not the origin. they may want to capture 1-9 since they're rounding down.
+            ):  # they made 0 a value on the chart and not the origin. they may want to capture 1-9 since they're rounding down.
                 if category[1] // y > 0:
                     bar_str += " o "
+                else:
+                    bar_str += " " * 3
             elif y == 0:
                 bar_str += " o "
         bar_str += " \n"
 
     # divider
-    bar_str += f'{" ":>4}{"-" * 3 * len(withdrawl_percentages) + "-"}\n'
+    bar_str += f'{" " * 4}{"-" * 3 * len(withdrawl_percentages) + "-"}\n'
 
     # x axis
-    # add spaces
     number_of_lines = max([len(category[0]) for category in withdrawl_percentages])
     for line_number in range(number_of_lines):
         bar_str += f'{" ":>4}'
         for category in withdrawl_percentages:
             if line_number < len(category[0]):
                 bar_str += f" {category[0][line_number]} "
-        bar_str += " \n"
+            else:
+                bar_str += " " * 3
+        if line_number < number_of_lines - 1:
+            bar_str += " \n"
+        else:
+            bar_str += " "
 
     return bar_str
 
 
+# ex
+food = Category("food")
+food.deposit(50, "for veges")
+food.withdraw(10, "veges")
+
+clothing = Category("clothing")
+clothing.deposit(30, "for shirts")
+clothing.withdraw(10, "shirts")
+
+food.transfer(10, clothing)
+
+print("\n")
+print(food)
+print(clothing)
+print("\n")
 print(create_spend_chart([food, clothing]))
