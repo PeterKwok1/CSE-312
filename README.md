@@ -1,7 +1,11 @@
 
 # Budget App
 
-Description
+Budget app with  deposit, withdrawl, balance, and transfer methods.
+
+Displays formatted entries by category
+
+Displays bar-chart of category withdrawls as a percentage of total withdrawls. 
 
 Example
 ```

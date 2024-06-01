@@ -70,14 +70,15 @@ food.transfer(10, clothing)
 def create_spend_chart(categories):
     bar_str = ""
 
-    # add title
+    # title
     title = "Percentage spent by category\n"
     bar_str += title
 
-    # add chart
-    # x axis values
+    # chart
     # percentage of withdrawls from total withdrawls
     # I think their design considers withdrawls as a result of transfers as spent money
+
+    # values
     withdrawls = []
     total_withdrawls = 0
 
@@ -96,20 +97,37 @@ def create_spend_chart(categories):
     ]
 
     # y axis
-    y_axis = list(range(0, 101, 10))
+    y_axis = list(range(100, -1, -10))
 
+    # add axis + values
     # nested for loop
-    # round down and compare x // y != 0
-    # ex:
-    # flt = 33.33333
-    # value = 40
-    # print(flt // value)
+    # round down and compare x // y > 0
+    for y in y_axis:
+        bar_str += f'{str(y) + "|":>4}'
+        for category in withdrawl_percentages:
+            if (
+                y != 0
+            ):  # i do not know why they made 0 a value on the chart and not the origin. they may want to capture 1-9 since they're rounding down.
+                if category[1] // y > 0:
+                    bar_str += " o "
+            elif y == 0:
+                bar_str += " o "
+        bar_str += " \n"
 
-    # add divider
+    # divider
+    bar_str += f'{" ":>4}{"-" * 3 * len(withdrawl_percentages) + "-"}\n'
 
-    # add labels
+    # x axis
+    # add spaces
+    number_of_lines = max([len(category[0]) for category in withdrawl_percentages])
+    for line_number in range(number_of_lines):
+        bar_str += f'{" ":>4}'
+        for category in withdrawl_percentages:
+            if line_number < len(category[0]):
+                bar_str += f" {category[0][line_number]} "
+        bar_str += " \n"
 
     return bar_str
 
 
-create_spend_chart([food, clothing])
+print(create_spend_chart([food, clothing]))
