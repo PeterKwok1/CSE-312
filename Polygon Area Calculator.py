@@ -28,7 +28,7 @@ class Rectangle:
         for line in range(self.height):
             for space in range(self.width):
                 rect_str += "*"
-            rect_str += "\n"  # remove last \n ?
+            rect_str += "\n"
         return rect_str
 
     def get_amount_inside(self, shape):
