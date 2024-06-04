@@ -32,8 +32,10 @@ class Rectangle:
         return rect_str
 
     def get_amount_inside(self, shape):
-        # how many squares in rectangle without rotating: square side must be less than rect height and width to fit, then integer division height and width and multiply.
-        pass
+        # square side must be less than rect width and height to fit. integer division height and width and multiply.
+        width_fit = self.width // shape.width
+        height_fit = self.height // shape.height
+        return width_fit * height_fit
 
 
 a = Rectangle(3, 4)
