@@ -38,11 +38,6 @@ class Rectangle:
         return width_fit * height_fit
 
 
-a = Rectangle(3, 4)
-print(a.get_diagonal())
-print(a.get_picture())
-
-
 # inheritance: https://www.w3schools.com/python/python_inheritance.asp
 class Square(Rectangle):
     def __init__(self, side) -> None:
