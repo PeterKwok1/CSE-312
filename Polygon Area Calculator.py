@@ -22,18 +22,46 @@ class Rectangle:
         return (self.width**2 + self.height**2) ** 0.5  # hypotenuse formula
 
     def get_picture(self):
+        if self.width > 50 or self.height > 50:
+            return "Too big for picture."
         rect_str = ""
         for line in range(self.height):
             for space in range(self.width):
-                pass
+                rect_str += "*"
+            rect_str += "\n"  # remove last \n ?
+        return rect_str
+
+    def get_amount_inside(self, shape):
+        # how many squares in rectangle without rotating: square side must be less than rect height and width to fit, then integer division height and width and multiply.
+        pass
 
 
 a = Rectangle(3, 4)
 print(a.get_diagonal())
+print(a.get_picture())
 
 
-class Square:
-    pass
+# inheritance: https://www.w3schools.com/python/python_inheritance.asp
+class Square(Rectangle):
+    def __init__(self, side) -> None:
+        super().__init__(side, side)
+
+    def __str__(self) -> str:
+        return f"Square(side={self.width})"
+
+    def set_side(self, side):
+        self.width = side
+        self.height = side
+
+    def set_width(self, side):
+        self.width = side
+        self.height = side
+
+    def set_height(self, side):
+        self.width = side
+        self.height = side
 
 
-# how many squares in rectangle without rotating: square side must be less than rect height and width to fit, then integer division height and width and multiply.
+b = Square(3)
+b.set_side(4)
+print(b.width, b.height)
