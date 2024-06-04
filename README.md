@@ -4,6 +4,7 @@
 Rectangle class with set_width, set_height, get_area, get_perimeter, get_diagonal, get_picture, and get_amount_inside methods. 
 
 Rectangle.get_picture() prints the rectangle
+
 Rectangle.get_amount_inside() takes another rectangle and returns the number of times it fits inside this one without rotating it.
 
 Square subclass with additional set_side method. 
