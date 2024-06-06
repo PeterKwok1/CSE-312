@@ -12,10 +12,12 @@ Returns an approximante probability of drawing the expected group of balls from 
 Example
 ```
 hat = Hat(black=6, red=4, green=3)
-probability = experiment(hat=hat,
-                  expected_balls={"red":2,"green":1},
-                  num_balls_drawn=5,
-                  num_experiments=2000)
+probability = experiment(
+    hat=hat,
+    expected_balls={"red":2,"green":1},
+    num_balls_drawn=5,
+    num_experiments=2000
+)
 
 <!-- Returns -->
 0.356
