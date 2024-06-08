@@ -9,9 +9,7 @@ https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm
 From their website: "Covers the fundamentals of full-stack web development and deployment with a strong emphasis on server-side code and functionality. Students will develop a full-stack web application without the use of a pre-existing web server or web framework. Topics include HTTP, APIs, AJAX, databases, encryption, authentication, sockets, privacy, and security."
 
 ## Purpose
-This course was highly reccomended by a friend who is an industry professional. - test
+This course was highly reccomended by a friend who is an industry professional. 
 
-## Progress
-https://youtu.be/HOjOH4BBY8U?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=184
 
 
