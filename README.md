@@ -3,7 +3,7 @@
 
 ## Resources
 https://cse312.com/
-https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/HOjOH4BBY8U?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=847
+https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/54-mh5IiMwo?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm
 
 ## Description
 From their website: "Covers the fundamentals of full-stack web development and deployment with a strong emphasis on server-side code and functionality. Students will develop a full-stack web application without the use of a pre-existing web server or web framework. Topics include HTTP, APIs, AJAX, databases, encryption, authentication, sockets, privacy, and security."
