@@ -3,7 +3,7 @@
 
 ## Resources
 - https://cse312.com/
-- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/54-mh5IiMwo?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm
+- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/54-mh5IiMwo?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1515
 
 ## Additonal Resources
 - Protocol: https://www.youtube.com/watch?v=d-zn-wv4Di8
