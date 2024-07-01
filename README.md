@@ -6,7 +6,7 @@
 
 ## Resources
 - https://cse312.com/
-- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/pVfKzJgYGcw?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1229
+- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/9zUHg7xjIqQ?t=2008
 
 ## External Resources
 - Protocol
