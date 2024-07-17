@@ -70,6 +70,5 @@ def routes(self):
         response = Response()
 
         response.set_status(404)
-        print(response.status_code, response.reason_phrase)
 
         self.request.sendall(response.send("404: Not Found"))
