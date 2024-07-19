@@ -2,7 +2,11 @@
 # CSE 312
 
 ## Tickets
-- 
+- pip
+    - https://snarky.ca/why-you-should-use-python-m-pip/
+    - https://www.w3schools.com/python/python_pip.asp 
+- pymongo
+    https://pymongo.readthedocs.io/en/stable/installation.html 
 
 ## Resources
 - https://cse312.com/
