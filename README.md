@@ -1,12 +1,11 @@
 
 # CSE 312
 
-## Tickets
-- pip
-    - https://snarky.ca/why-you-should-use-python-m-pip/
-    - https://www.w3schools.com/python/python_pip.asp 
-- pymongo
-    https://pymongo.readthedocs.io/en/stable/installation.html 
+## Description
+From their website: "Covers the fundamentals of full-stack web development and deployment with a strong emphasis on server-side code and functionality. Students will develop a full-stack web application without the use of a pre-existing web server or web framework. Topics include HTTP, APIs, AJAX, databases, encryption, authentication, sockets, privacy, and security."
+
+## Purpose
+This course was highly reccomended by an industry professional friend. 
 
 ## Resources
 - https://cse312.com/
@@ -37,11 +36,7 @@
 - WebRTC
     - https://www.youtube.com/watch?v=WmR9IMUD_CY
 
-## Description
-From their website: "Covers the fundamentals of full-stack web development and deployment with a strong emphasis on server-side code and functionality. Students will develop a full-stack web application without the use of a pre-existing web server or web framework. Topics include HTTP, APIs, AJAX, databases, encryption, authentication, sockets, privacy, and security."
-
-## Purpose
-This course was highly reccomended by an industry professional friend. 
-
-
+## Tickets
+- pymongo
+    - https://pymongo.readthedocs.io/en/stable/installation.html 
 

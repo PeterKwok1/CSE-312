@@ -1,0 +1,7 @@
+Dockerfile
+docker-compse*
+.dockerignore
+.git
+.gitignore
+.env
+__pycache__
