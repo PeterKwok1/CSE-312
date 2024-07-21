@@ -58,10 +58,19 @@ def routes(self):
             self.request.sendall(response.send(file))
 
     if request.path == "/chat-messages":
-        if request.method == "POST":
+        if request.method == "GET":
             found = True
 
             response = Response()
+
+            print("chat get")
+
+        elif request.method == "POST":
+            found = True
+
+            response = Response()
+
+            print("chat post")
 
             response.set_status(201)
 

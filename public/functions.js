@@ -66,8 +66,10 @@ function sendChat() {
             }
         }
         const messageJSON = { "message": message };
+
         request.open("POST", "/chat-messages");
         request.send(JSON.stringify(messageJSON));
+
     }
     chatTextBox.focus();
 }
