@@ -2,6 +2,7 @@ from util.request import Request
 from util.response import Response
 import re
 import datetime
+import json
 
 
 def routes(self):
@@ -61,16 +62,23 @@ def routes(self):
         if request.method == "GET":
             found = True
 
-            response = Response()
+            # pymongo
+            # get messages
 
-            print("chat get")
+            response = Response()
 
         elif request.method == "POST":
             found = True
 
-            response = Response()
+            message_json = request.body.decode("utf-8")
+            message_dict = json.loads(message_json)
 
-            print("chat post")
+            message = {"username": "Guest", "message": message_dict["message"]}
+
+            # pymongo
+            # save message
+
+            response = Response()
 
             response.set_status(201)
 
