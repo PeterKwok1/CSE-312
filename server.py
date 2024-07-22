@@ -1,5 +1,16 @@
 import socketserver
 from routes import routes
+import pymongo
+import os
+
+
+mongo_uri = f"mongodb://{os.environ["MONGO_USERNAME"]}:{os.environ["MONGO_PASSWORD"]}@{os.environ["MONGO_HOST"]}:{os.environ["MONGO_PORT"]}/?authSource=admin"
+client = pymongo.MongoClient(mongo_uri)
+db = client.test
+db.my_collection.insert_one({"x": 10})
+# print(db.my_collection.find_one({"x": 10}))
+# mongodb://myDatabaseUser:D1fficultP%40ssw0rd@mongodb0.example.com:27017/?authSource=admin
+# `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):

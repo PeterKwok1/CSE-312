@@ -38,5 +38,6 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - pymongo
-    - https://pymongo.readthedocs.io/en/stable/installation.html 
+    - mongo connect
+    - https://pypi.org/project/pymongo/
 
