@@ -64,25 +64,39 @@ def routes(self, db):
 
             # pymongo
             # get messages
-            # update response object to handle list
-            # is list it's own type?
-            messages = list(db.message_collection.find())
+            db_messages = list(db.message_collection.find())
+
+            # json data types do not include mongo ObjectId's.
+            client_messages = [
+                {
+                    "id": str(message.get("_id")),
+                    "username": message["username"],
+                    "message": message["message"],
+                }
+                for message in db_messages
+            ]
 
             response = Response()
+
+            response.set_status(200)
+
+            self.request.sendall(response.send(client_messages))
 
         elif request.method == "POST":
             found = True
 
-            message_json = request.body.decode("utf-8")
-            message_dict = json.loads(message_json)
+            json_message = request.body.decode("utf-8")
+            dict_message = json.loads(json_message)
 
-            message = {"username": "Guest", "message": message_dict["message"]}
+            db_message = {"username": "Guest", "message": dict_message["message"]}
 
-            db.message_collection.insert_one(message)
+            db.message_collection.insert_one(db_message)
 
             response = Response()
 
             response.set_status(201)
+
+            self.request.sendall(response.send())
 
     # Not Found
     if not found:

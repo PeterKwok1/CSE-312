@@ -43,7 +43,7 @@ class Response:
         if isinstance(body, str):
             self.set_header({"Content-Type": content_type_key["str"]})
             body = body.encode("utf-8")
-        elif isinstance(body, dict):
+        elif isinstance(body, dict) or isinstance(body, list):
             self.set_header({"Content-Type": content_type_key["json"]})
             body = json.dumps(body).encode("utf-8")
         else:
