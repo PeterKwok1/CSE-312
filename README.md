@@ -38,6 +38,5 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - pymongo
-    - mongo connect
     - https://pypi.org/project/pymongo/
 

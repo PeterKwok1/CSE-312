@@ -5,7 +5,7 @@ import datetime
 import json
 
 
-def routes(self):
+def routes(self, db):
     # parse request
     received_data = self.request.recv(2048)
     print(self.client_address)
@@ -64,6 +64,9 @@ def routes(self):
 
             # pymongo
             # get messages
+            # update response object to handle list
+            # is list it's own type?
+            messages = list(db.message_collection.find())
 
             response = Response()
 
@@ -75,8 +78,7 @@ def routes(self):
 
             message = {"username": "Guest", "message": message_dict["message"]}
 
-            # pymongo
-            # save message
+            db.message_collection.insert_one(message)
 
             response = Response()
 

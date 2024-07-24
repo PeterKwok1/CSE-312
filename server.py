@@ -6,19 +6,18 @@ import os
 
 mongo_uri = f"mongodb://{os.environ["MONGO_USERNAME"]}:{os.environ["MONGO_PASSWORD"]}@{os.environ["MONGO_HOST"]}:{os.environ["MONGO_PORT"]}/?authSource=admin"
 client = pymongo.MongoClient(mongo_uri)
-db = client.test
-db.my_collection.insert_one({"x": 10})
-# print(db.my_collection.find_one({"x": 10}))
-# mongodb://myDatabaseUser:D1fficultP%40ssw0rd@mongodb0.example.com:27017/?authSource=admin
-# `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`
-
+db = client.chat_app_db
+# collection = db.test_collection
+# entry = {"x": 10}
+# collection.insert_one(entry)
+# print(collection.find_one({"x": 10}))
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
 
         # construct request and response
-        routes(self)
+        routes(self, db)
 
         # TODO: Parse the HTTP request and use self.request.sendall(response) to send your response
 
