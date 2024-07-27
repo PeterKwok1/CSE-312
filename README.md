@@ -37,7 +37,7 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=WmR9IMUD_CY
 
 ## Tickets
-- escape html in get chat-messages
-    - check functions.js to see how browser renders text to html. I guess users can change client side code. 
-    - escape </>? google/test
+- app objective one
+    - retrieve single
+
 
