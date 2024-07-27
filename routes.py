@@ -4,6 +4,7 @@ import re
 import datetime
 import json
 from util.escape_html import escape_html
+from bson.objectid import ObjectId
 
 
 def routes(self, db):
@@ -115,9 +116,27 @@ def routes(self, db):
         if request.method == "GET":
             found = True
 
+            match = re.search("(?<=^/chat-messages/).+", request.path)
+            param_id = match.group()
+
+            message = None
+            if ObjectId.is_valid(param_id):
+                message = db.message_collection.find_one({"_id": ObjectId(param_id)})
+
             response = Response()
 
-            self.request.sendall(response.send())
+            if message:
+                message_to_send = {
+                    "id": str(message.get("_id")),
+                    "username": message["username"],
+                    "message": message["message"],
+                }
+                response.set_status(200)
+            else:
+                message_to_send = ""
+                response.set_status(404)
+
+            self.request.sendall(response.send(message_to_send))
 
     # Not Found
     if not found:

@@ -37,7 +37,7 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=WmR9IMUD_CY
 
 ## Tickets
-- app objective one
-    - retrieve single
+- app objective two
+
 
 
