@@ -16,13 +16,9 @@ def routes(self, db):
     print("--- end of data ---\n\n")
     request = Request(received_data)
 
-    found = None
-
     # root
     if request.path == "/":
         if request.method == "GET":
-            found = True
-
             response = Response()
 
             visit_count = (
@@ -48,21 +44,21 @@ def routes(self, db):
             file = open("./public/index.html", "rb")
 
             self.request.sendall(response.send(file))
+            return
 
     # public
     if re.search("^/public/.+", request.path):
         if request.method == "GET":
-            found = True
-
             response = Response()
 
             file = open(f".{request.path}", "rb")
 
             self.request.sendall(response.send(file))
+            return
 
     if request.path == "/chat-messages":
         if request.method == "GET":
-            found = True
+            response = Response()
 
             # pymongo
             # get messages
@@ -78,14 +74,12 @@ def routes(self, db):
                 for message in messages
             ]
 
-            response = Response()
-
             response.set_status(200)
-
             self.request.sendall(response.send(messages_to_send))
+            return
 
         elif request.method == "POST":
-            found = True
+            response = Response()
 
             message_json = request.body.decode("utf-8")
             message = json.loads(message_json)
@@ -105,43 +99,51 @@ def routes(self, db):
                 "message": message_to_save["message"],
             }
 
-            response = Response()
-
             response.set_status(201)
-
             self.request.sendall(response.send(message_to_send))
+            return
 
     # params
     if re.search("^/chat-messages/.+", request.path):
         if request.method == "GET":
-            found = True
-
-            match = re.search("(?<=^/chat-messages/).+", request.path)
-            param_id = match.group()
-
-            message = None
-            if ObjectId.is_valid(param_id):
-                message = db.message_collection.find_one({"_id": ObjectId(param_id)})
-
             response = Response()
 
-            if message:
-                message_to_send = {
-                    "id": str(message.get("_id")),
-                    "username": message["username"],
-                    "message": message["message"],
-                }
-                response.set_status(200)
-            else:
-                message_to_send = ""
-                response.set_status(404)
+            param_id = re.search("(?<=^/chat-messages/).+", request.path).group()
 
-            self.request.sendall(response.send(message_to_send))
+            if ObjectId.is_valid(param_id):
+                message = db.message_collection.find_one({"_id": ObjectId(param_id)})
+                if message:
+                    message_to_send = {
+                        "id": str(message.get("_id")),
+                        "username": message["username"],
+                        "message": message["message"],
+                    }
+
+                    response.set_status(200)
+                    self.request.sendall(response.send(message_to_send))
+                    return
+
+            response.set_status(404)
+            self.request.sendall(response.send())
+            return
+
+        elif request.method == "DELETE":
+            response = Response()
+
+            param_id = re.search("(?<=^/chat-messages/).+", request.path).group()
+
+            if ObjectId.is_valid(param_id):
+                delete_result = db.message_collection.delete_one(
+                    {"_id": ObjectId(param_id)}
+                )
+                #
+                print(delete_result, delete_result.deleted_count)
+
+            response.set_status(204)
+            self.request.sendall(response.send())
+            return
 
     # Not Found
-    if not found:
-        response = Response()
-
-        response.set_status(404)
-
-        self.request.sendall(response.send("404: Not Found"))
+    response = Response()
+    response.set_status(404)
+    self.request.sendall(response.send("404: Not Found"))

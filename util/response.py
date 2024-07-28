@@ -1,7 +1,7 @@
 import json
 import re
 
-status_code_key = {200: "OK", 201: "Created", 404: "Not Found"}
+status_code_key = {200: "OK", 201: "Created", 204: "No Content", 404: "Not Found"}
 content_type_key = {
     "str": "text/plain; charset=UTF-8",
     "json": "application/json",

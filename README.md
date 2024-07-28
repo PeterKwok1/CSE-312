@@ -38,6 +38,9 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - app objective two
+    - delete route
+        - ``` if delete_result.deleted_count ... successful delete, else unsuccessfull```
+    - clean up routes
 
 
 
