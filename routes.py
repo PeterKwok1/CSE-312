@@ -2,12 +2,16 @@ from util.request import Request
 from util.response import Response
 import re
 import datetime
-import json
-from util.escape_html import escape_html
-from bson.objectid import ObjectId
+from util.controllers import (
+    get_all_messages,
+    post_message,
+    get_message_by_id,
+    delete_message_by_id,
+    update_message_by_id,
+)
 
 
-def routes(self, db):
+def routes(self):
     # parse request
     received_data = self.request.recv(2048)
     print(self.client_address)
@@ -16,10 +20,11 @@ def routes(self, db):
     print("--- end of data ---\n\n")
     request = Request(received_data)
 
+    response = Response()
+
     # root
     if request.path == "/":
         if request.method == "GET":
-            response = Response()
 
             visit_count = (
                 int(request.cookies["visit_count"]) + 1
@@ -44,106 +49,45 @@ def routes(self, db):
             file = open("./public/index.html", "rb")
 
             self.request.sendall(response.send(file))
-            return
 
     # public
-    if re.search("^/public/.+", request.path):
+    elif re.search("^/public/.+", request.path):
         if request.method == "GET":
-            response = Response()
 
             file = open(f".{request.path}", "rb")
 
             self.request.sendall(response.send(file))
-            return
 
-    if request.path == "/chat-messages":
+    elif request.path == "/chat-messages":
         if request.method == "GET":
-            response = Response()
 
-            # pymongo
-            # get messages
-            messages = list(db.message_collection.find())
-
-            # json data types do not include mongo ObjectId's.
-            messages_to_send = [
-                {
-                    "id": str(message.get("_id")),
-                    "username": message["username"],
-                    "message": message["message"],
-                }
-                for message in messages
-            ]
-
-            response.set_status(200)
-            self.request.sendall(response.send(messages_to_send))
-            return
+            get_all_messages(self, request, response)
 
         elif request.method == "POST":
-            response = Response()
 
-            message_json = request.body.decode("utf-8")
-            message = json.loads(message_json)
-
-            message_to_save = {
-                "username": "Guest",
-                "message": escape_html(message["message"]),
-            }
-
-            message_save_result = db.message_collection.insert_one(message_to_save)
-
-            # convert saved message to dict with json format (similar to above) and send back result
-            # insert_one returns an InsertOneResult object
-            message_to_send = {
-                "id": str(message_save_result.inserted_id),
-                "username": message_to_save["username"],
-                "message": message_to_save["message"],
-            }
-
-            response.set_status(201)
-            self.request.sendall(response.send(message_to_send))
-            return
+            post_message(self, request, response)
 
     # params
-    if re.search("^/chat-messages/.+", request.path):
+    elif re.search("^/chat-messages/.+", request.path):
+
+        # could also probably create a function to extract params like express by parsing by "/" and mapping some syntax to it. ``` if request path matches route... ```
+        # and add it to the request object via method
+        # but idk if necessary and if it'll make sense with the rest of the project
+        param_id = re.search("(?<=^/chat-messages/).+", request.path).group()
+
         if request.method == "GET":
-            response = Response()
 
-            param_id = re.search("(?<=^/chat-messages/).+", request.path).group()
-
-            if ObjectId.is_valid(param_id):
-                message = db.message_collection.find_one({"_id": ObjectId(param_id)})
-                if message:
-                    message_to_send = {
-                        "id": str(message.get("_id")),
-                        "username": message["username"],
-                        "message": message["message"],
-                    }
-
-                    response.set_status(200)
-                    self.request.sendall(response.send(message_to_send))
-                    return
-
-            response.set_status(404)
-            self.request.sendall(response.send())
-            return
+            get_message_by_id(self, param_id, request, response)
 
         elif request.method == "DELETE":
-            response = Response()
 
-            param_id = re.search("(?<=^/chat-messages/).+", request.path).group()
+            delete_message_by_id(self, param_id, request, response)
 
-            if ObjectId.is_valid(param_id):
-                delete_result = db.message_collection.delete_one(
-                    {"_id": ObjectId(param_id)}
-                )
-                #
-                print(delete_result, delete_result.deleted_count)
+        elif request.method == "PUT":
 
-            response.set_status(204)
-            self.request.sendall(response.send())
-            return
+            update_message_by_id(self, param_id, request, response)
 
-    # Not Found
-    response = Response()
-    response.set_status(404)
-    self.request.sendall(response.send("404: Not Found"))
+    else:
+        # Not Found
+        response.set_status(404)
+        self.request.sendall(response.send("404: Not Found"))
