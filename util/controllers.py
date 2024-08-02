@@ -34,14 +34,16 @@ def post_message(self, request, response):
         "message": escape_html(message["message"]),
     }
 
+    # insert_one returns an InsertOneResult object
     message_save_result = db.message_collection.insert_one(message_to_save)
 
-    # convert saved message to dict with json format and send back
-    # insert_one returns an InsertOneResult object
+    # find_one returns dict with objectId
     message_saved = db.message_collection.find_one(
         {"_id": ObjectId(message_save_result.inserted_id)}
     )
-    message_saved["_id"] = str(message.get("_id"))
+
+    # convert objectId to str to match json format k
+    message_saved["_id"] = str(message_saved["_id"])
 
     response.set_status(201)
     self.request.sendall(response.send(message_saved))
@@ -85,18 +87,16 @@ def update_message_by_id(self, param_id, request, response):
         update = json.loads(update_json)
 
         update_result = db.message_collection.update_one(
-            {"_id": ObjectId(param_id)}, update
+            {"_id": ObjectId(param_id)}, {"$set": update}
         )
 
         if update_result.matched_count:
-            print(update_result.raw_result)
-            # updated = db.message_collection.find_one(
-            #     {"_id": ObjectId(message_save_result.inserted_id)}
-            # )
-            # updated["_id"] = str(message["_id"])
+            # update_one does not return the doc or _id
+            updated = db.message_collection.find_one({"_id": ObjectId(param_id)})
+            updated["_id"] = str(updated["_id"])
 
             response.set_status(200)
-            self.request.sendall(response.send({}))
+            self.request.sendall(response.send(updated))
             return
 
     response.set_status(404)

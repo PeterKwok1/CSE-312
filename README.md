@@ -9,7 +9,7 @@ This course was highly reccomended by an industry professional friend.
 
 ## Resources
 - https://cse312.com/
-- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/pVfKzJgYGcw?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm
+- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/v2pznSymjJo?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=2
 
 ## External Resources
 - Protocol
@@ -40,8 +40,6 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - app objective two
-    - update route
-        - check raw_result
-            - https://pymongo.readthedocs.io/en/stable/api/pymongo/results.html#pymongo.results.UpdateResult
-        - test update route function - stub > post man
+    - update route - done 
+        
 
