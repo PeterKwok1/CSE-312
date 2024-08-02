@@ -41,7 +41,7 @@ def post_message(self, request, response):
     message_saved = db.message_collection.find_one(
         {"_id": ObjectId(message_save_result.inserted_id)}
     )
-    message_saved["_id"] = str(message["_id"])
+    message_saved["_id"] = str(message.get("_id"))
 
     response.set_status(201)
     self.request.sendall(response.send(message_saved))

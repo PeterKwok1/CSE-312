@@ -36,7 +36,7 @@ This course was highly reccomended by an industry professional friend.
 - WebRTC
     - https://www.youtube.com/watch?v=WmR9IMUD_CY
 - Postman
-    - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - https://youtu.be/VywxIQ2ZXw4?t=5491
+    - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
 
 ## Tickets
 - app objective two
