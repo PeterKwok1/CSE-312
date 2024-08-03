@@ -9,7 +9,7 @@ This course was highly reccomended by an industry professional friend.
 
 ## Resources
 - https://cse312.com/
-- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/v2pznSymjJo?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=2
+- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/54qipO2qvJI?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=335
 
 ## External Resources
 - Protocol
