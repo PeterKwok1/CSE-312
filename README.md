@@ -9,7 +9,7 @@ This course was highly reccomended by an industry professional friend.
 
 ## Resources
 - https://cse312.com/
-- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/54qipO2qvJI?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=335
+- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/kcC6HCK-bPA?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1222
 
 ## External Resources
 - Protocol
@@ -39,7 +39,9 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
 
 ## Tickets
-- app objective two
-    - update route - done 
+- request class
+    - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
+    - differentiate by request method (no body for get), content type, and content length
+
         
 
