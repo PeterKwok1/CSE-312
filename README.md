@@ -9,7 +9,7 @@ This course was highly reccomended by an industry professional friend.
 
 ## Resources
 - https://cse312.com/
-- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/kcC6HCK-bPA?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1222
+- https://www.youtube.com/playlist?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm - https://youtu.be/wCZbtxVI96I?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1683
 
 ## External Resources
 - Protocol
@@ -42,6 +42,7 @@ This course was highly reccomended by an industry professional friend.
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length
+    - improve html templating using placeholder
 
         
 
