@@ -1,3 +1,6 @@
+import re
+
+
 class Router:
 
     def __init__(self) -> None:
@@ -11,18 +14,17 @@ class Router:
 
     # loads routes
     def add_route(self, HTTP_method: str, path: str, response_method):
-        self.routes[HTTP_method].path = response_method
+        if path not in self.routes:
+            self.routes[path] = {}
+
+        if HTTP_method not in self.routes[path]:
+            self.routes[path][HTTP_method] = response_method
 
     # route request to loaded routes
     def route_request(self, request: object) -> bytearray:
-        pass
-
-
-ex = Router()
-
-ex.add_route("a", "b", "c")
-
-print(ex)
-
-test = {"^$": "hihi"}
-print(test)
+        for path in self.routes.keys():
+            if re.search(path, request.path):
+                return self.routes[path][request.method](request)
+            else:
+                pass
+                # 404
