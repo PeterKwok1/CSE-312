@@ -44,6 +44,10 @@ This course was highly reccomended by an industry professional friend.
     - and add it to the request object via method
     - but idk if necessary and if it'll make sense with the rest of the project
     - ```param_id = re.search("(?<=^/chat-messages/).+", request.path).group()```
+    - adjust path comparator -> ex: ```^:static_file$```
+        - fix: public is not param, but path. 
+    - create param method on request class.
+    - extract param 
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length

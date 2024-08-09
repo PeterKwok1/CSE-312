@@ -32,7 +32,7 @@ def return_index(request, response):
     return response.send(file)
 
 
-def return_static_files(request, response):
+def return_static_file(request, response):
     file = open(f".{request.path}", "rb")
 
     return response.send(file)
