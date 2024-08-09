@@ -2,11 +2,43 @@ from util.connection import db
 import json
 from util.escape_html import escape_html
 from bson.objectid import ObjectId
+import datetime
 
-# could handle db connection errors
+
+def return_index(request, response):
+    visit_count = (
+        int(request.cookies["visit_count"]) + 1
+        if "visit_count" in request.cookies
+        else 1
+    )
+    cookie_expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        hours=1
+    )
+    date_format = r"%a, %d %b %Y %X %Z"
+    response.set_cookie(
+        {
+            "visit_count": f"{visit_count}; Expires={cookie_expiration.strftime(date_format)}"
+        }
+    )
+
+    # i may have just been able to encode the text to bytes.
+    template = open("./public/template.html", "rt").read()
+    template_update = template.replace(r"{{visits}}", str(visit_count))
+    file = open("./public/index.html", "wt")
+    file.write(template_update)
+    file.close()
+    file = open("./public/index.html", "rb")
+
+    return response.send(file)
 
 
-def get_all_messages(self, request, response):
+def return_static_files(request, response):
+    file = open(f".{request.path}", "rb")
+
+    return response.send(file)
+
+
+def get_all_messages(request, response):
 
     messages = list(db.message_collection.find())
 
@@ -21,10 +53,10 @@ def get_all_messages(self, request, response):
     ]
 
     response.set_status(200)
-    self.request.sendall(response.send(messages))
+    return response.send(messages)
 
 
-def post_message(self, request, response):
+def post_message(request, response):
 
     message_json = request.body.decode("utf-8")
     message = json.loads(message_json)
@@ -46,10 +78,10 @@ def post_message(self, request, response):
     message_saved["_id"] = str(message_saved["_id"])
 
     response.set_status(201)
-    self.request.sendall(response.send(message_saved))
+    return response.send(message_saved)
 
 
-def get_message_by_id(self, param_id, request, response):
+def get_message_by_id(param_id, request, response):
     if ObjectId.is_valid(param_id):
 
         message = db.message_collection.find_one({"_id": ObjectId(param_id)})
@@ -59,28 +91,26 @@ def get_message_by_id(self, param_id, request, response):
             message["_id"] = str(message["_id"])
 
             response.set_status(200)
-            self.request.sendall(response.send(message))
-            return
+            return response.send(message)
 
     response.set_status(404)
-    self.request.sendall(response.send("Message not found"))
+    return response.send("Message not found")
 
 
-def delete_message_by_id(self, param_id, request, response):
+def delete_message_by_id(param_id, request, response):
     if ObjectId.is_valid(param_id):
 
         delete_result = db.message_collection.delete_one({"_id": ObjectId(param_id)})
 
         if delete_result.deleted_count:
             response.set_status(204)
-            self.request.sendall(response.send("Delete Successful"))
-            return
+            return response.send("Delete Successful")
 
     response.set_status(404)
-    self.request.sendall(response.send("Delete Unsuccessful"))
+    return response.send("Delete Unsuccessful")
 
 
-def update_message_by_id(self, param_id, request, response):
+def update_message_by_id(param_id, request, response):
     if ObjectId.is_valid(param_id):
 
         update_json = request.body.decode("utf-8")
@@ -96,8 +126,7 @@ def update_message_by_id(self, param_id, request, response):
             updated["_id"] = str(updated["_id"])
 
             response.set_status(200)
-            self.request.sendall(response.send(updated))
-            return
+            return response.send(updated)
 
     response.set_status(404)
-    self.request.sendall(response.send("Update Unsuccessful"))
+    return response.send("Update Unsuccessful")

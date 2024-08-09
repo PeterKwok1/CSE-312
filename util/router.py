@@ -21,10 +21,10 @@ class Router:
             self.routes[path][HTTP_method] = response_method
 
     # route request to loaded routes
-    def route_request(self, request: object) -> bytearray:
+    def route_request(self, request: object, response: object) -> bytearray:
         for path in self.routes.keys():
             if re.search(path, request.path):
-                return self.routes[path][request.method](request)
-            else:
-                pass
-                # 404
+                return self.routes[path][request.method](request, response)
+
+        response.set_status(404)
+        return response.send("404: Not Found")

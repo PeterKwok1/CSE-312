@@ -39,6 +39,11 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
 
 ## Tickets
+- param
+    - could also probably create a function to extract params like express by parsing by "/" and mapping some syntax to it. ``` if request path matches route... ```
+    - and add it to the request object via method
+    - but idk if necessary and if it'll make sense with the rest of the project
+    - ```param_id = re.search("(?<=^/chat-messages/).+", request.path).group()```
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length

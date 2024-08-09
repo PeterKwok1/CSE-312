@@ -1,12 +1,28 @@
 import socketserver
-from routes import routes
 
 from util.router import Router
 from util.request import Request
+from util.response import Response
+from util.controllers import (
+    return_index,
+    return_static_files,
+    get_all_messages,
+    post_message,
+    get_message_by_id,
+    delete_message_by_id,
+    update_message_by_id,
+)
 
-app = Router
 
-app.add_route()
+app = Router()
+
+app.add_route("GET", "^/$", return_index)
+app.add_route("GET", "^/public/.+", return_static_files)
+app.add_route("GET", "/chat-messages", get_all_messages)
+app.add_route("POST", "/chat-messages", post_message)
+app.add_route("GET", "^/chat-messages/.+", get_message_by_id)
+app.add_route("DELETE", "^/chat-messages/.+", delete_message_by_id)
+app.add_route("PUT", "^/chat-messages/.+", update_message_by_id)
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
@@ -21,11 +37,11 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         print("--- end of data ---\n\n")
         request = Request(received_data)
 
+        response = Response()
+
         # route request
-        app.route_request(request)
-        # construct request and response
-        # routes(self)
-        # test
+        response_bytes = app.route_request(request, response)
+        self.request.sendall(response_bytes)
 
         # TODO: Parse the HTTP request and use self.request.sendall(response) to send your response
 
