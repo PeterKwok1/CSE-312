@@ -40,14 +40,15 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - param
-    - could also probably create a function to extract params like express by parsing by "/" and mapping some syntax to it. ``` if request path matches route... ```
-    - and add it to the request object via method
-    - but idk if necessary and if it'll make sense with the rest of the project
-    - ```param_id = re.search("(?<=^/chat-messages/).+", request.path).group()```
-    - adjust path comparator -> ex: ```^:static_file$```
-        - fix: public is not param, but path. 
-    - create param method on request class.
     - extract param 
+        - parse by "/", map, extract
+        - add it to the request object via method
+            - create param method on request class.
+        - reference playground for iter to extract params
+            - old method: ```param_id = re.search("(?<=^/chat-messages/).+", request.path).group()```
+    - fix: test path hack and patch it out
+        - validate public path outside of regex. (..)
+    - adjust controller to return response object, then call response.send() to return bytes
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length

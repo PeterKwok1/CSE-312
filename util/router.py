@@ -22,13 +22,20 @@ class Router:
 
     # route request to loaded routes
     def route_request(self, request: object, response: object) -> bytearray:
+        # validate
+
+        # compare
         for path in self.routes.keys():
+
+            # detect params
             param_pattern = re.compile(":[^/]+")
             path_pattern = f"^{re.sub(param_pattern, "[^/]+", path)}$"
-            print(path_pattern)
+
             if re.search(path_pattern, request.path):
 
                 return self.routes[path][request.method](request, response)
 
         response.set_status(404)
         return response.send("404: Not Found")
+    
+

@@ -17,7 +17,9 @@ from util.controllers import (
 app = Router()
 
 app.add_route("GET", "/", return_index)
-app.add_route("GET", "/public/:static_file_name", return_static_file)
+# this will only return html if it is preceded by /public
+# adding regex to it's path is a short cut to implementing middleware which parses public differently from routes because public allows downward folder navigation which requires it's path to match a request path of any length.
+app.add_route("GET", "/public/.+", return_static_file)
 app.add_route("GET", "/chat-messages", get_all_messages)
 app.add_route("POST", "/chat-messages", post_message)
 app.add_route("GET", "/chat-messages/:id", get_message_by_id)
