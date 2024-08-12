@@ -39,16 +39,8 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
 
 ## Tickets
-- param
-    - extract param 
-        - parse by "/", map, extract
-        - add it to the request object via method
-            - create param method on request class.
-        - reference playground for iter to extract params
-            - old method: ```param_id = re.search("(?<=^/chat-messages/).+", request.path).group()```
-    - fix: test path hack and patch it out
+- fix: test public path hack and patch it out
         - validate public path outside of regex. (..)
-    - adjust controller to return response object, then call response.send() to return bytes
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length

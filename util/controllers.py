@@ -81,10 +81,12 @@ def post_message(request, response):
     return response.send(message_saved)
 
 
-def get_message_by_id(param_id, request, response):
-    if ObjectId.is_valid(param_id):
+def get_message_by_id(request, response):
+    if ObjectId.is_valid(request.params["id"]):
 
-        message = db.message_collection.find_one({"_id": ObjectId(param_id)})
+        message = db.message_collection.find_one(
+            {"_id": ObjectId(request.params["id"])}
+        )
 
         if message:
 
@@ -97,10 +99,12 @@ def get_message_by_id(param_id, request, response):
     return response.send("Message not found")
 
 
-def delete_message_by_id(param_id, request, response):
-    if ObjectId.is_valid(param_id):
+def delete_message_by_id(request, response):
+    if ObjectId.is_valid(request.params["id"]):
 
-        delete_result = db.message_collection.delete_one({"_id": ObjectId(param_id)})
+        delete_result = db.message_collection.delete_one(
+            {"_id": ObjectId(request.params["id"])}
+        )
 
         if delete_result.deleted_count:
             response.set_status(204)
@@ -110,19 +114,21 @@ def delete_message_by_id(param_id, request, response):
     return response.send("Delete Unsuccessful")
 
 
-def update_message_by_id(param_id, request, response):
-    if ObjectId.is_valid(param_id):
+def update_message_by_id(request, response):
+    if ObjectId.is_valid(request.params["id"]):
 
         update_json = request.body.decode("utf-8")
         update = json.loads(update_json)
 
         update_result = db.message_collection.update_one(
-            {"_id": ObjectId(param_id)}, {"$set": update}
+            {"_id": ObjectId(request.params["id"])}, {"$set": update}
         )
 
         if update_result.matched_count:
             # update_one does not return the doc or _id
-            updated = db.message_collection.find_one({"_id": ObjectId(param_id)})
+            updated = db.message_collection.find_one(
+                {"_id": ObjectId(request.params["id"])}
+            )
             updated["_id"] = str(updated["_id"])
 
             response.set_status(200)

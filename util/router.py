@@ -22,17 +22,24 @@ class Router:
 
     # route request to loaded routes
     def route_request(self, request: object, response: object) -> bytearray:
+        # I'm essentially defining middleware here. 
+
         # validate
 
         # compare
         for path in self.routes.keys():
-
             # detect params
             param_pattern = re.compile(":[^/]+")
             path_pattern = f"^{re.sub(param_pattern, "[^/]+", path)}$"
 
             if re.search(path_pattern, request.path):
+                # extract params
+                param_keys = [(i, key) for i, key in enumerate(path.split("/")) if re.search(param_pattern, key)]
+                path_values = request.path.split("/")
 
+                for key in param_keys:
+                    request.set_param(key[1].strip(":"), path_values[key[0]])  
+                
                 return self.routes[path][request.method](request, response)
 
         response.set_status(404)

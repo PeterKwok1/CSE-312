@@ -26,6 +26,11 @@ class Request:
                 cookie = cookie.split("=", 1)
                 self.cookies[cookie[0].strip(" ")] = cookie[1]
 
+        self.params = {}
+
+    def set_param(self, key: str, value: str):
+        self.params[key] = value
+
 
 def test1():
     request = Request(

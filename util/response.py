@@ -18,7 +18,7 @@ class Response:
         self.HTTP_Version = "HTTP/1.1"
         self.status_code = 200
         self.reason_phrase = status_code_key[self.status_code]
-        self.headers = {}
+        self.headers = {"X-Content-Type-Options": "nosniff"}
 
     def __str__(self) -> str:
         return f"{self.HTTP_Version} {self.status_code} {self.reason_phrase}\r\n{self.headers.items()}"
@@ -51,7 +51,6 @@ class Response:
             self.set_header({"Content-Type": content_type_key[file_extension]})
             body = body.read()
         self.headers["Content-Length"] = len(body)
-        self.headers["X-Content-Type-Options"] = "nosniff"
 
         # request line
         request_line = f"{self.HTTP_Version} {self.status_code} {self.reason_phrase}"
