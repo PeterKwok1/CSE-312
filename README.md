@@ -2,7 +2,7 @@
 # CSE 312
 
 ## Description
-From their website: "Covers the fundamentals of full-stack web development and deployment with a strong emphasis on server-side code and functionality. Students will develop a full-stack web application without the use of a pre-existing web server or web framework. Topics include HTTP, APIs, AJAX, databases, encryption, authentication, sockets, privacy, and security."
+"Covers the fundamentals of full-stack web development and deployment with a strong emphasis on server-side code and functionality. Students will develop a full-stack web application without the use of a pre-existing web server or web framework. Topics include HTTP, APIs, AJAX, databases, encryption, authentication, sockets, privacy, and security."
 
 ## Purpose
 This course was highly reccomended by an industry professional friend. 
@@ -38,9 +38,11 @@ This course was highly reccomended by an industry professional friend.
 - Postman
     - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
 
+## Notes
+- Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
+
 ## Tickets
-- fix: test public path hack and patch it out
-        - validate public path outside of regex. (..)
+- Learning Objective 1, b2
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length

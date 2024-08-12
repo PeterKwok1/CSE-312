@@ -25,7 +25,10 @@ class Router:
         # I'm essentially defining middleware here. 
 
         # validate
-
+        if re.search("\\.\\.", request.path): # . is wildcard. otherwise this will 404 everything but "/"
+            response.set_status(404)
+            return response.send("404: Not Found")
+            
         # compare
         for path in self.routes.keys():
             # detect params
@@ -33,14 +36,17 @@ class Router:
             path_pattern = f"^{re.sub(param_pattern, "[^/]+", path)}$"
 
             if re.search(path_pattern, request.path):
-                # extract params
-                param_keys = [(i, key) for i, key in enumerate(path.split("/")) if re.search(param_pattern, key)]
-                path_values = request.path.split("/")
 
-                for key in param_keys:
-                    request.set_param(key[1].strip(":"), path_values[key[0]])  
-                
-                return self.routes[path][request.method](request, response)
+                if request.method in self.routes[path]:
+
+                    # extract params
+                    param_keys = [(i, key) for i, key in enumerate(path.split("/")) if re.search(param_pattern, key)]
+                    path_values = request.path.split("/")
+
+                    for key in param_keys:
+                        request.set_param(key[1].strip(":"), path_values[key[0]])  
+                    
+                    return self.routes[path][request.method](request, response)
 
         response.set_status(404)
         return response.send("404: Not Found")
