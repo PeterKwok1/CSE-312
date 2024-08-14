@@ -8,23 +8,29 @@ class Request:
         header = header.decode("utf-8").split("\r\n")
         request_line = header[0].split(" ")
 
-        self.body = body  # bytes
         self.method = request_line[0]  # str
         self.path = request_line[1]  # str
         self.http_version = request_line[2]  # str
-        self.headers = {}
 
+        self.headers = {}
         for header_field in header[1:]:
             header_field = header_field.split(":", 1)
             self.headers[header_field[0]] = header_field[1].strip(" ")
 
         self.cookies = {}
-
         if "Cookie" in self.headers:
             cookies = self.headers["Cookie"].split(";")
             for cookie in cookies:
                 cookie = cookie.split("=", 1)
                 self.cookies[cookie[0].strip(" ")] = cookie[1]
+
+        if "Content-Type" in self.headers:
+            if self.headers["Content-Type"] == "text/plain;charset=UTF-8":
+                self.body = body.decode("utf-8")
+            elif self.headers["Content-Type"] == "application/x-www-form-urlencoded":
+                self.body = body.decode("utf-8")
+            else:
+                self.body = body
 
         self.params = {}
 

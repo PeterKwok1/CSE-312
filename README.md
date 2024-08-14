@@ -42,6 +42,7 @@ This course was highly reccomended by an industry professional friend.
 - Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
 
 ## Tickets
+- read content-length of bytes
 - Learning Objective 1, b2
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588

@@ -57,9 +57,7 @@ def get_all_messages(request, response):
 
 
 def post_message(request, response):
-
-    message_json = request.body.decode("utf-8")
-    message = json.loads(message_json)
+    message = json.loads(request.body)
 
     message_to_save = {
         "username": "Guest",
@@ -117,8 +115,7 @@ def delete_message_by_id(request, response):
 def update_message_by_id(request, response):
     if ObjectId.is_valid(request.params["id"]):
 
-        update_json = request.body.decode("utf-8")
-        update = json.loads(update_json)
+        update = json.loads(request.body)
 
         update_result = db.message_collection.update_one(
             {"_id": ObjectId(request.params["id"])}, {"$set": update}
