@@ -24,13 +24,16 @@ class Request:
                 cookie = cookie.split("=", 1)
                 self.cookies[cookie[0].strip(" ")] = cookie[1]
 
-        if "Content-Type" in self.headers:
-            if self.headers["Content-Type"] == "text/plain;charset=UTF-8":
-                self.body = body.decode("utf-8")
-            elif self.headers["Content-Type"] == "application/x-www-form-urlencoded":
-                self.body = body.decode("utf-8")
+        if self.headers.keys() >= {"Content-Type", "Content-Length"}:
+            content_type = self.headers["Content-Type"]
+            content_length = int(self.headers["Content-Length"])
+
+            if content_type == "text/plain;charset=UTF-8":
+                self.body = body.decode("utf-8")[0:content_length]
+            elif content_type == "application/x-www-form-urlencoded":
+                self.body = body.decode("utf-8")[0:content_length]
             else:
-                self.body = body
+                self.body = body[0:content_length]
 
         self.params = {}
 
