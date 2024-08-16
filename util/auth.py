@@ -17,7 +17,7 @@ percent_encoding_key = {
 
 def decode_url_encoded_str(url_encoded_str: str) -> dict:
     # decode percent encoding
-    # ex: username_reg=%5E%26_&password_reg=password
+    # ex: username_reg=user_%5Ename&password_reg=passw%26rd
     # re.escape escapes regex meta characters. though it's not needed here, it has been applied to the key and value.
     key_escaped_percent_encoding_key = dict(
         (re.escape(key), val) for key, val in percent_encoding_key.items()
@@ -55,3 +55,31 @@ def extract_credentials(request: object) -> list:
         else url_encoded_params["password_login"]
     )
     return [username, password]
+
+
+def validate_password(password: str) -> bool:
+    valid = True
+    # could also return false but that doesn't tell if you if the password fails other checks
+    if len(password) <= 8:
+        valid = False
+
+    if not re.search("[a-z]", password):
+        valid = False
+    if not re.search("[A-Z]", password):
+        valid = False
+    if not re.search("[0-9]", password):
+        valid = False
+
+    special_characters = re.compile(
+        "|".join([re.escape(val) for val in percent_encoding_key.values()])
+    )
+    if not re.search(special_characters, password):
+        valid = False
+
+    invalid_characters = (
+        "[^a-zA-Z0-9" + re.escape("".join(percent_encoding_key.values())) + "]"
+    )
+    if re.search(invalid_characters, password):
+        valid = False
+
+    return valid

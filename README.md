@@ -42,10 +42,8 @@ This course was highly reccomended by an industry professional friend.
 - Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
 
 ## Tickets
-- Learning Objective 1, b2
-    - decode_url_encoded_str
-        - decode percent encoding in one pass. 
-        - https://stackoverflow.com/questions/6116978/how-to-replace-multiple-substrings-of-a-string
+- Learning Objective 2
+    - auth lectures 
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length
