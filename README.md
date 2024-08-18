@@ -19,7 +19,7 @@ This course was highly reccomended by an industry professional friend.
     - 2/2: https://www.youtube.com/watch?v=EQ95oGeISeU&t=4s
     - 2/5: https://www.youtube.com/watch?v=Eey-wgfdCWQ
     - 2/7: https://www.youtube.com/watch?v=kWwlK7_4uas
-    - 2/9: https://www.youtube.com/watch?v=MLu0ZLqLMm0
+    - 2/9: https://www.youtube.com/watch?v=MLu0ZLqLMm0 - https://youtu.be/MLu0ZLqLMm0?t=201
     - 2/12: https://www.youtube.com/watch?v=pUDNUGXRsDY
     - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY
     - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k
@@ -69,6 +69,10 @@ This course was highly reccomended by an industry professional friend.
 - Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
 
 ## Tickets
+- 2024 lecture catch up
+    - lecture 2/7
+        - set HttpOnly directive on cookie
+        - change expire directive to Max-Age
 - Learning Objective 2
     - auth lectures 
 - request class

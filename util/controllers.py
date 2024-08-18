@@ -11,6 +11,7 @@ def return_index(request, response):
         if "visit_count" in request.cookies
         else 1
     )
+    # using the Max-Age directive would have been simpler in this case instead of the Expries directive
     cookie_expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
         hours=1
     )
