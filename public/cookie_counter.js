@@ -1,3 +1,4 @@
+//// Replaced with server-side rendering
 // function cookieParser(cookie) {
 //     const cookie_list = cookie.split(';').map((e) => e.trim())
 

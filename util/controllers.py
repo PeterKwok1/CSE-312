@@ -11,16 +11,19 @@ def return_index(request, response):
         if "visit_count" in request.cookies
         else 1
     )
-    # using the Max-Age directive would have been simpler in this case instead of the Expries directive
-    cookie_expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
-        hours=1
-    )
-    date_format = r"%a, %d %b %Y %X %Z"
-    response.set_cookie(
-        {
-            "visit_count": f"{visit_count}; Expires={cookie_expiration.strftime(date_format)}"
-        }
-    )
+
+    ## replaced this with Max-Age directive
+    # cookie_expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+    #     hours=1
+    # )
+    # date_format = r"%a, %d %b %Y %X %Z"
+    # response.set_cookie(
+    #     {
+    #         "visit_count": f"{visit_count}; Expires={cookie_expiration.strftime(date_format)}"
+    #     }
+    # )
+
+    response.set_cookie({"visit_count": f"{visit_count}; Max-Age={3}; HttpOnly"})
 
     # i may have just been able to encode the text to bytes.
     template = open("./public/template.html", "rt").read()
