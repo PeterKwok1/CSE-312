@@ -19,9 +19,9 @@ This course was highly reccomended by an industry professional friend.
     - 2/2: https://www.youtube.com/watch?v=EQ95oGeISeU&t=4s
     - 2/5: https://www.youtube.com/watch?v=Eey-wgfdCWQ
     - 2/7: https://www.youtube.com/watch?v=kWwlK7_4uas
-    - 2/9: https://www.youtube.com/watch?v=MLu0ZLqLMm0 - https://youtu.be/MLu0ZLqLMm0?t=941
+    - 2/9: https://www.youtube.com/watch?v=MLu0ZLqLMm0 
     - 2/12: https://www.youtube.com/watch?v=pUDNUGXRsDY
-    - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY
+    - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY - https://youtu.be/70jiFzzckyY?t=359
     - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k
     - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE
     - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk
@@ -80,6 +80,8 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - 2024 lecture catch up
+    - Lecture 2/24
+        - Update html template
 - Learning Objective 2
     - auth lectures 
 - request class
