@@ -21,7 +21,7 @@ This course was highly reccomended by an industry professional friend.
     - 2/7: https://www.youtube.com/watch?v=kWwlK7_4uas
     - 2/9: https://www.youtube.com/watch?v=MLu0ZLqLMm0 
     - 2/12: https://www.youtube.com/watch?v=pUDNUGXRsDY
-    - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY - https://youtu.be/70jiFzzckyY?t=359
+    - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY - https://youtu.be/70jiFzzckyY?t=898
     - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k
     - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE
     - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk
@@ -74,14 +74,14 @@ This course was highly reccomended by an industry professional friend.
         - nosniff 
     - Cookies
         - HttpOnly directive
-    - escape potential code sent by users
-    - prevent users from accessing files outside of directory
-    - docker 
+    - HTML Injection 
+        - Escape potential code sent by users
+    - Path
+        - Prevent users from accessing files outside of directory
+    - Docker 
 
 ## Tickets
 - 2024 lecture catch up
-    - Lecture 2/24
-        - Update html template
 - Learning Objective 2
     - auth lectures 
 - request class

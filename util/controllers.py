@@ -22,11 +22,12 @@ def return_index(request, response):
     #         "visit_count": f"{visit_count}; Expires={cookie_expiration.strftime(date_format)}"
     #     }
     # )
+    print("change")
 
     response.set_cookie({"visit_count": f"{visit_count}; Max-Age={3}; HttpOnly"})
 
-    # i may have just been able to encode the text to bytes.
-    template = open("./public/template.html", "rt").read()
+    # there maybe a cleaner way to template
+    template = open("./public/template_index.html", "rt").read()
     template_update = template.replace(r"{{visits}}", str(visit_count))
     file = open("./public/index.html", "wt")
     file.write(template_update)
