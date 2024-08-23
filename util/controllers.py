@@ -64,6 +64,7 @@ def get_all_messages(request, response):
 def post_message(request, response):
     message = json.loads(request.body)
 
+    # I forgot to escape put requests so a user can still perform an html injection attack that way.
     message_to_save = {
         "username": "Guest",
         "message": escape_html(message["message"]),

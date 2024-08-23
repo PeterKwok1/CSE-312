@@ -21,8 +21,8 @@ This course was highly reccomended by an industry professional friend.
     - 2/7: https://www.youtube.com/watch?v=kWwlK7_4uas
     - 2/9: https://www.youtube.com/watch?v=MLu0ZLqLMm0 
     - 2/12: https://www.youtube.com/watch?v=pUDNUGXRsDY
-    - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY - https://youtu.be/70jiFzzckyY?t=898
-    - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k
+    - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY 
+    - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k -
     - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE
     - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk
     - 2/23: https://www.youtube.com/watch?v=rpTDAcSG1BE
@@ -68,16 +68,16 @@ This course was highly reccomended by an industry professional friend.
 ## Notes
 - Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
 - Security 
-    - SQL
-        - Prepared statements 
+    - HTML Injection 
+        - Escape code sent by users
     - X-Content-Type-Options
         - nosniff 
     - Cookies
         - HttpOnly directive
-    - HTML Injection 
-        - Escape potential code sent by users
     - Path
         - Prevent users from accessing files outside of directory
+    - SQL
+        - Prepared statements 
     - Docker 
 
 ## Tickets

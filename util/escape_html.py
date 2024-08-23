@@ -7,7 +7,8 @@ def escape_html(unsafe: str):
     return safe
 
 
-# Manual replacement. If you want to replace "&" with "&amp;", you have to do it first because otherwise it'd replace the other replacements.
+# Manual replacement.
+# Escape "&" with "&amp;" first because otherwise it'd replace the other replacements.
 # ---
 # html_key = {"<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;"}
 
