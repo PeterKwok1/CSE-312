@@ -23,8 +23,8 @@ This course was highly reccomended by an industry professional friend.
     - 2/12: https://www.youtube.com/watch?v=pUDNUGXRsDY
     - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY 
     - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k 
-    - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE - https://youtu.be/jDKe86qZuXE?t=2017
-    - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk
+    - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE 
+    - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk - https://youtu.be/nbUaJGrJCzk?t=457
     - 2/23: https://www.youtube.com/watch?v=rpTDAcSG1BE
     - 2/26: https://www.youtube.com/watch?v=JYOwokooKdk
     - 2/28: https://www.youtube.com/watch?v=PdU0X81MWU4
@@ -80,10 +80,11 @@ This course was highly reccomended by an industry professional friend.
         - Prepared statements 
     - Docker 
     - Auth
+        - long, complex, password
         - Never store passwords as plain text
             - cryptographic hash
             - salt
-        - long, complex, password
+        - invalidate auth tokens at some time server side. 
 
 ## Tickets
 - Learning Objective 2
