@@ -24,7 +24,7 @@ This course was highly reccomended by an industry professional friend.
     - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY 
     - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k 
     - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE 
-    - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk - https://youtu.be/nbUaJGrJCzk?t=457
+    - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk - https://youtu.be/nbUaJGrJCzk?t=1831
     - 2/23: https://www.youtube.com/watch?v=rpTDAcSG1BE
     - 2/26: https://www.youtube.com/watch?v=JYOwokooKdk
     - 2/28: https://www.youtube.com/watch?v=PdU0X81MWU4
@@ -80,15 +80,20 @@ This course was highly reccomended by an industry professional friend.
         - Prepared statements 
     - Docker 
     - Auth
-        - long, complex, password
-        - Never store passwords as plain text
-            - cryptographic hash
-            - salt
-        - invalidate auth tokens at some time server side. 
+        - front end can never be trusted. 
+            - perform all checks server side. 
+        - password
+            - long, complex
+            - never store as plain text
+                - salt
+                - cryptographic hash
+        - tokens
+            - long, complex
+            - store hash 
+            - invalidate at some time server side. 
 
 ## Tickets
 - Learning Objective 2
-    - auth lectures 
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length
