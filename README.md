@@ -24,8 +24,8 @@ This course was highly reccomended by an industry professional friend.
     - 2/14: https://www.youtube.com/watch?v=70jiFzzckyY 
     - 2/16: https://www.youtube.com/watch?v=keU3Dssig4k 
     - 2/19: https://www.youtube.com/watch?v=jDKe86qZuXE 
-    - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk - https://youtu.be/nbUaJGrJCzk?t=1831
-    - 2/23: https://www.youtube.com/watch?v=rpTDAcSG1BE
+    - 2/21: https://www.youtube.com/watch?v=nbUaJGrJCzk 
+    - 2/23: https://www.youtube.com/watch?v=rpTDAcSG1BE - 
     - 2/26: https://www.youtube.com/watch?v=JYOwokooKdk
     - 2/28: https://www.youtube.com/watch?v=PdU0X81MWU4
     - 3/1: https://www.youtube.com/watch?v=HZYJgwAWp34
@@ -73,14 +73,16 @@ This course was highly reccomended by an industry professional friend.
     - X-Content-Type-Options
         - nosniff 
     - Cookies
-        - HttpOnly directive
+        - directives
+            - HttpOnly 
+            - Secure 
     - Path
         - Prevent users from accessing files outside of directory
     - SQL
         - Prepared statements 
     - Docker 
     - Auth
-        - front end can never be trusted. 
+        - never trust your front end. 
             - perform all checks server side. 
         - password
             - long, complex
