@@ -1,4 +1,6 @@
 import re
+from util.connection import db
+import bcrypt
 
 percent_encoding_key = {
     "%21": "!",
@@ -83,3 +85,19 @@ def validate_password(password: str) -> bool:
         valid = False
 
     return valid
+
+
+def register(request, response):
+    credentials = extract_credentials(request)
+    username = credentials[0]
+    password = credentials[1]
+
+    if not validate_password(password):
+        response.set_status(401)
+        return response.send("Invalid password")
+
+    # db.users.insert_one()
+
+
+def login(request, response):
+    pass
