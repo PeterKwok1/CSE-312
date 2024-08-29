@@ -96,6 +96,7 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - Learning Objective 2
+    - test redirect 
 - request class
     - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
     - differentiate by request method (no body for get), content type, and content length

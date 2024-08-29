@@ -67,22 +67,28 @@ def validate_password(password: str) -> bool:
 
     if not re.search("[a-z]", password):
         valid = False
+        # print("lowercase", password)
     if not re.search("[A-Z]", password):
         valid = False
+        # print("uppercase", password)
     if not re.search("[0-9]", password):
         valid = False
+        # print("number", password)
 
+    # we aren't decoding + into space so we aren't stripping space, though we could strip + I guess, so if a password contains a space, it will be considered invalid.
     special_characters = re.compile(
         "|".join([re.escape(val) for val in percent_encoding_key.values()])
     )
     if not re.search(special_characters, password):
         valid = False
+        # print("special character", password)
 
     invalid_characters = (
         "[^a-zA-Z0-9" + re.escape("".join(percent_encoding_key.values())) + "]"
     )
     if re.search(invalid_characters, password):
         valid = False
+        print("invalid character", password)
 
     return valid
 
@@ -96,7 +102,15 @@ def register(request, response):
         response.set_status(401)
         return response.send("Invalid password")
 
-    # db.users.insert_one()
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+    db.users.insert_one({"username": username, "password": hashed_password})
+
+    response.set_status(302)
+    response.set_header({"Location": "/public/image/eagle.jpg"})
+
+    return response.send()
+    # how to redirect?
 
 
 def login(request, response):
