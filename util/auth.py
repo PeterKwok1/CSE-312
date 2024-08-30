@@ -107,11 +107,30 @@ def register(request, response):
     db.users.insert_one({"username": username, "password": hashed_password})
 
     response.set_status(302)
-    response.set_header({"Location": "/public/image/eagle.jpg"})
+    response.set_header({"Location": "/"})
 
     return response.send()
-    # how to redirect?
 
 
+# jamjong
+# jammyJong123@
 def login(request, response):
-    pass
+    credentials = extract_credentials(request)
+    username = credentials[0]
+    password = credentials[1]
+
+    user = db.users.find_one({"username": username})
+
+    if not user:
+        response.set_status(401)
+        return response.send("Username not found")
+
+    if not bcrypt.checkpw(password.encode("utf-8"), user["password"]):
+        response.set_status(401)
+
+        return response.send("Invalid password")
+
+    response.set_status(302)
+    response.set_header({"Location": "/"})
+
+    return response.send()
