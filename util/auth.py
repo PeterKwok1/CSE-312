@@ -1,6 +1,7 @@
 import re
 from util.connection import db
 import bcrypt
+import secrets
 
 percent_encoding_key = {
     "%21": "!",

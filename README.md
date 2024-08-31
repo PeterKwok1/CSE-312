@@ -96,13 +96,13 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - Learning Objective 2
-    - test redirect 
-- request class
-    - https://youtu.be/OGsfNKnvLH4?list=PLOLBRzMrfILfsGxjFL6EHvAVR97dFjkwm&t=1588
-    - differentiate by request method (no body for get), content type, and content length
-    - improve html templating using placeholder
+    - generate auth token
+        - token = secrets.token_bytes(32)
+        - bcrypt hash_pw() seems to require salt. must hash a different way so can look up easier during auth
 
+    - auth expiration
 
+    
 
         
 
