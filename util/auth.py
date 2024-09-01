@@ -2,6 +2,7 @@ import re
 from util.connection import db
 import bcrypt
 import secrets
+import hashlib
 
 percent_encoding_key = {
     "%21": "!",
@@ -94,11 +95,26 @@ def validate_password(password: str) -> bool:
     return valid
 
 
+def generate_auth(response: object, username) -> object:
+    token = secrets.token_bytes(32)
+    hash_obj = hashlib.sha256()
+    hash_obj.update(token)
+    hash_hex = hash_obj.hexdigest()
+
+    response.set_cookie({"chat_auth": f"{hash_hex}; HttpOnly"})
+
+    db.users.update_one({"username": username}, {"$set": {"auth_token": hash_hex}})
+
+    return response
+
+
 def register(request, response):
+    # extract credentials
     credentials = extract_credentials(request)
     username = credentials[0]
     password = credentials[1]
 
+    # validate user
     if not validate_password(password):
         response.set_status(401)
         return response.send("Invalid password")
@@ -107,6 +123,10 @@ def register(request, response):
 
     db.users.insert_one({"username": username, "password": hashed_password})
 
+    # authorize user
+    response = generate_auth(response, username)
+
+    # send response
     response.set_status(302)
     response.set_header({"Location": "/"})
 
@@ -116,10 +136,12 @@ def register(request, response):
 # jamjong
 # jammyJong123@
 def login(request, response):
+    # extract credentials
     credentials = extract_credentials(request)
     username = credentials[0]
     password = credentials[1]
 
+    # validate user
     user = db.users.find_one({"username": username})
 
     if not user:
@@ -131,6 +153,10 @@ def login(request, response):
 
         return response.send("Invalid password")
 
+    # authorize user
+    response = generate_auth(response, username)
+
+    # send response
     response.set_status(302)
     response.set_header({"Location": "/"})
 

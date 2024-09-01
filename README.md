@@ -64,6 +64,8 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=WmR9IMUD_CY
 - Postman
     - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
+- hashlib
+    - https://www.youtube.com/watch?v=i-h0CtKde6w
 
 ## Notes
 - Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
@@ -97,10 +99,7 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - Learning Objective 2
     - generate auth token
-        - token = secrets.token_bytes(32)
-        - bcrypt hash_pw() seems to require salt. must hash a different way so can look up easier during auth
-
-    - auth expiration
+    
 
     
 
