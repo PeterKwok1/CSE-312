@@ -3,6 +3,8 @@ import json
 from util.escape_html import escape_html
 from bson.objectid import ObjectId
 import datetime
+from util.auth import extract_credentials, validate_password, generate_auth
+import bcrypt
 
 
 def return_index(request, response):
@@ -63,6 +65,9 @@ def get_all_messages(request, response):
 
 def post_message(request, response):
     message = json.loads(request.body)
+
+    # auth
+    # if validate_auth(), username = that user
 
     # I forgot to escape put requests so a user can still perform an html injection attack that way.
     message_to_save = {
@@ -139,3 +144,58 @@ def update_message_by_id(request, response):
 
     response.set_status(404)
     return response.send("Update Unsuccessful")
+
+
+def register(request, response):
+    # extract credentials
+    credentials = extract_credentials(request)
+    username = credentials[0]
+    password = credentials[1]
+
+    # validate user
+    if not validate_password(password):
+        response.set_status(401)
+        return response.send("Invalid password")
+
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+
+    db.users.insert_one({"username": username, "password": hashed_password})
+
+    # authorize user
+    response = generate_auth(response, username)
+
+    # send response
+    response.set_status(302)
+    response.set_header({"Location": "/"})
+
+    return response.send()
+
+
+# jamjong
+# jammyJong123@
+def login(request, response):
+    # extract credentials
+    credentials = extract_credentials(request)
+    username = credentials[0]
+    password = credentials[1]
+
+    # validate user
+    user = db.users.find_one({"username": username})
+
+    if not user:
+        response.set_status(401)
+        return response.send("Username not found")
+
+    if not bcrypt.checkpw(password.encode("utf-8"), user["password"]):
+        response.set_status(401)
+
+        return response.send("Invalid password")
+
+    # authorize user
+    response = generate_auth(response, username)
+
+    # send response
+    response.set_status(302)
+    response.set_header({"Location": "/"})
+
+    return response.send()

@@ -99,6 +99,8 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - Learning Objective 2
     - generate auth token
+        - unicode vs utf-8
+        - transfer playground code (token_bytes -> token_hex to attach str to response and save hex)
     
 
     

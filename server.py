@@ -11,8 +11,9 @@ from util.controllers import (
     get_message_by_id,
     delete_message_by_id,
     update_message_by_id,
+    register,
+    login,
 )
-from util.auth import register, login
 
 app = Router()
 

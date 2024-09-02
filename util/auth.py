@@ -1,6 +1,5 @@
 import re
 from util.connection import db
-import bcrypt
 import secrets
 import hashlib
 
@@ -95,11 +94,18 @@ def validate_password(password: str) -> bool:
     return valid
 
 
+def hash(bytes_to_hash: bytes) -> bytes:
+    hash_obj = hashlib.sha256()
+    hash_obj.update(bytes_to_hash)
+    hash_hex = hash_obj.hexdigest()
+    return hash_hex
+
+
+# fix: am currently sending hash, not token. send token, store hash, check token hash against stored hash
 def generate_auth(response: object, username) -> object:
     token = secrets.token_bytes(32)
-    hash_obj = hashlib.sha256()
-    hash_obj.update(token)
-    hash_hex = hash_obj.hexdigest()
+
+    hash_hex = hash(token)
 
     response.set_cookie({"chat_auth": f"{hash_hex}; HttpOnly"})
 
@@ -108,56 +114,13 @@ def generate_auth(response: object, username) -> object:
     return response
 
 
-def register(request, response):
-    # extract credentials
-    credentials = extract_credentials(request)
-    username = credentials[0]
-    password = credentials[1]
-
-    # validate user
-    if not validate_password(password):
-        response.set_status(401)
-        return response.send("Invalid password")
-
-    hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-
-    db.users.insert_one({"username": username, "password": hashed_password})
-
-    # authorize user
-    response = generate_auth(response, username)
-
-    # send response
-    response.set_status(302)
-    response.set_header({"Location": "/"})
-
-    return response.send()
+def validate_auth(request: object) -> bool:
+    if "auth_token" in request.cookies:
+        user = db.users.find_one({"auth_token": request.cookies["auth_token"]})
+        if user:
+            return user
+    return False
 
 
-# jamjong
-# jammyJong123@
-def login(request, response):
-    # extract credentials
-    credentials = extract_credentials(request)
-    username = credentials[0]
-    password = credentials[1]
-
-    # validate user
-    user = db.users.find_one({"username": username})
-
-    if not user:
-        response.set_status(401)
-        return response.send("Username not found")
-
-    if not bcrypt.checkpw(password.encode("utf-8"), user["password"]):
-        response.set_status(401)
-
-        return response.send("Invalid password")
-
-    # authorize user
-    response = generate_auth(response, username)
-
-    # send response
-    response.set_status(302)
-    response.set_header({"Location": "/"})
-
-    return response.send()
+def delete_auth():
+    pass
