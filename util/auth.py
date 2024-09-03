@@ -68,13 +68,10 @@ def validate_password(password: str) -> bool:
 
     if not re.search("[a-z]", password):
         valid = False
-        # print("lowercase", password)
     if not re.search("[A-Z]", password):
         valid = False
-        # print("uppercase", password)
     if not re.search("[0-9]", password):
         valid = False
-        # print("number", password)
 
     # we aren't decoding + into space so we aren't stripping space, though we could strip + I guess, so if a password contains a space, it will be considered invalid.
     special_characters = re.compile(
@@ -82,41 +79,42 @@ def validate_password(password: str) -> bool:
     )
     if not re.search(special_characters, password):
         valid = False
-        # print("special character", password)
 
     invalid_characters = (
         "[^a-zA-Z0-9" + re.escape("".join(percent_encoding_key.values())) + "]"
     )
     if re.search(invalid_characters, password):
         valid = False
-        print("invalid character", password)
 
     return valid
 
 
-def hash(bytes_to_hash: bytes) -> bytes:
+def hash_hex(hex: str) -> str:
     hash_obj = hashlib.sha256()
-    hash_obj.update(bytes_to_hash)
-    hash_hex = hash_obj.hexdigest()
-    return hash_hex
+    hash_obj.update(bytes.fromhex(hex))
+    hash = hash_obj.hexdigest()
+    return hash
 
 
-# fix: am currently sending hash, not token. send token, store hash, check token hash against stored hash
 def generate_auth(response: object, username) -> object:
-    token = secrets.token_bytes(32)
+    token = secrets.token_hex(32)
 
-    hash_hex = hash(token)
+    hash = hash_hex(token)
 
-    response.set_cookie({"chat_auth": f"{hash_hex}; HttpOnly"})
+    # send token
+    response.set_cookie({"auth_token": f"{token}; HttpOnly"})
 
-    db.users.update_one({"username": username}, {"$set": {"auth_token": hash_hex}})
+    # save hash
+    db.users.update_one({"username": username}, {"$set": {"auth_token": hash}})
 
     return response
 
 
 def validate_auth(request: object) -> bool:
+    # check token hash against stored hash
     if "auth_token" in request.cookies:
-        user = db.users.find_one({"auth_token": request.cookies["auth_token"]})
+        hash = hash_hex(request.cookies["auth_token"])
+        user = db.users.find_one({"auth_token": hash})
         if user:
             return user
     return False

@@ -3,7 +3,12 @@ import json
 from util.escape_html import escape_html
 from bson.objectid import ObjectId
 import datetime
-from util.auth import extract_credentials, validate_password, generate_auth
+from util.auth import (
+    extract_credentials,
+    validate_password,
+    generate_auth,
+    validate_auth,
+)
 import bcrypt
 
 
@@ -14,7 +19,7 @@ def return_index(request, response):
         else 1
     )
 
-    ## replaced this with Max-Age directive
+    ## replaced by Max-Age directive
     # cookie_expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
     #     hours=1
     # )
@@ -24,7 +29,6 @@ def return_index(request, response):
     #         "visit_count": f"{visit_count}; Expires={cookie_expiration.strftime(date_format)}"
     #     }
     # )
-    print("change")
 
     response.set_cookie({"visit_count": f"{visit_count}; Max-Age={3}; HttpOnly"})
 
@@ -67,11 +71,13 @@ def post_message(request, response):
     message = json.loads(request.body)
 
     # auth
-    # if validate_auth(), username = that user
+    # if validate_auth(), username = user's username
+    user = validate_auth(request)
+    username = user["username"] if user else "Guest"
 
-    # I forgot to escape put requests so a user can still perform an html injection attack that way.
+    # it wasn't required, but a user could also set their username to html to perform an html injection attack since that's displayed to other users as well.
     message_to_save = {
-        "username": "Guest",
+        "username": username,
         "message": escape_html(message["message"]),
     }
 
@@ -127,9 +133,11 @@ def update_message_by_id(request, response):
     if ObjectId.is_valid(request.params["id"]):
 
         update = json.loads(request.body)
+        update["message"] = escape_html(update["message"])
 
         update_result = db.message_collection.update_one(
-            {"_id": ObjectId(request.params["id"])}, {"$set": update}
+            {"_id": ObjectId(request.params["id"])},
+            {"$set": update},
         )
 
         if update_result.matched_count:
@@ -153,6 +161,12 @@ def register(request, response):
     password = credentials[1]
 
     # validate user
+    user = db.users.find_one({"username": username})
+
+    if user:
+        response.set_status(401)
+        return response.send("Username taken")
+
     if not validate_password(password):
         response.set_status(401)
         return response.send("Invalid password")

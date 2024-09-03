@@ -97,10 +97,10 @@ This course was highly reccomended by an industry professional friend.
             - invalidate at some time server side. 
 
 ## Tickets
-- Learning Objective 2
-    - generate auth token
-        - unicode vs utf-8
-        - transfer playground code (token_bytes -> token_hex to attach str to response and save hex)
+- Learning Objective 2    
+    - log out
+        - template engine
+    - invalidate auth_token server and client-side
     
 
     
