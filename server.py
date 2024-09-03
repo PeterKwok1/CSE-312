@@ -13,6 +13,7 @@ from util.controllers import (
     update_message_by_id,
     register,
     login,
+    logout,
 )
 
 app = Router()
@@ -29,6 +30,7 @@ app.add_route("PUT", "/chat-messages/:id", update_message_by_id)
 
 app.add_route("POST", "/register", register)
 app.add_route("POST", "/login", login)
+app.add_route("POST", "/logout", logout)
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):

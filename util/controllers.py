@@ -8,6 +8,7 @@ from util.auth import (
     validate_password,
     generate_auth,
     validate_auth,
+    delete_auth,
 )
 import bcrypt
 
@@ -70,8 +71,7 @@ def get_all_messages(request, response):
 def post_message(request, response):
     message = json.loads(request.body)
 
-    # auth
-    # if validate_auth(), username = user's username
+    # validate
     user = validate_auth(request)
     username = user["username"] if user else "Guest"
 
@@ -213,3 +213,13 @@ def login(request, response):
     response.set_header({"Location": "/"})
 
     return response.send()
+
+
+def logout(request, response):
+    # validate
+    delete_result = delete_auth(request)
+    if delete_result:
+        # replace with redirect
+        return response.send("Logout successful")
+    else:
+        return response.send("Logout failed")

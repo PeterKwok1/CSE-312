@@ -95,12 +95,11 @@ This course was highly reccomended by an industry professional friend.
             - long, complex
             - store hash 
             - invalidate at some time server side. 
+                - my thinking is to store it with a date and check that date upon touching it. 
 
 ## Tickets
 - Learning Objective 2    
-    - log out
-        - template engine
-    - invalidate auth_token server and client-side
+    - delete messages
     
 
     

@@ -120,5 +120,12 @@ def validate_auth(request: object) -> bool:
     return False
 
 
-def delete_auth():
-    pass
+def delete_auth(request):
+    if "auth_token" in request.cookies:
+        hash = hash_hex(request.cookies["auth_token"])
+        update_result = db.users.update_one(
+            {"auth_token": hash}, {"$unset": {"auth_token": ""}}
+        )
+        if update_result.modified_count:
+            return True
+    return False
