@@ -2,6 +2,7 @@ import re
 from util.connection import db
 import secrets
 import hashlib
+import datetime
 
 percent_encoding_key = {
     "%21": "!",
@@ -100,12 +101,19 @@ def generate_auth(response: object, username) -> object:
     token = secrets.token_hex(32)
 
     hash = hash_hex(token)
+    duration = 3600
+    expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        seconds=duration
+    )
 
     # send token
-    response.set_cookie({"auth_token": f"{token}; HttpOnly"})
+    response.set_cookie({"auth_token": f"{token}; Max-Age={duration}; HttpOnly"})
 
     # save hash
-    db.users.update_one({"username": username}, {"$set": {"auth_token": hash}})
+    db.users.update_one(
+        {"username": username},
+        {"$set": {"auth": {"hash": hash, "expiration": expiration}}},
+    )
 
     return response
 
@@ -114,7 +122,14 @@ def validate_auth(request: object) -> bool:
     # check token hash against stored hash
     if "auth_token" in request.cookies:
         hash = hash_hex(request.cookies["auth_token"])
-        user = db.users.find_one({"auth_token": hash})
+        # invalidate auth on expiration -> this method may not work. it leaves them logged in.
+        # instead, find hash, if not there, return false, if expired, delete it and return false.
+        user = db.users.find_one(
+            {
+                "auth.hash": hash,
+                "auth.expiration": {"$lte": datetime.datetime.now(datetime.UTC)},
+            }
+        )
         if user:
             return user
     return False
@@ -124,7 +139,8 @@ def delete_auth(request):
     if "auth_token" in request.cookies:
         hash = hash_hex(request.cookies["auth_token"])
         update_result = db.users.update_one(
-            {"auth_token": hash}, {"$unset": {"auth_token": ""}}
+            {"auth.hash": hash},
+            {"$unset": {"auth": ""}},
         )
         if update_result.modified_count:
             return True

@@ -115,18 +115,30 @@ def get_message_by_id(request, response):
 
 
 def delete_message_by_id(request, response):
-    if ObjectId.is_valid(request.params["id"]):
 
-        delete_result = db.message_collection.delete_one(
-            {"_id": ObjectId(request.params["id"])}
-        )
+    # validate
+    # if user is valid and message belongs to them, delete
+    user = validate_auth(request)
+    if not user:
+        response.set_status(403)
+        return response.send("Not authorized")
 
-        if delete_result.deleted_count:
-            response.set_status(204)
-            return response.send("Delete Successful")
+    if not ObjectId.is_valid(request.params["id"]):
+        response.set_status(404)
+        return response.send("Invalid id")
 
-    response.set_status(404)
-    return response.send("Delete Unsuccessful")
+    message = db.message_collection.find_one({"_id": ObjectId(request.params["id"])})
+    if not message:
+        response.set_status(404)
+        return response.send("Message not found")
+
+    if user["username"] == message["username"]:
+        db.message_collection.delete_one({"_id": ObjectId(request.params["id"])})
+
+        return response.send("Delete successful")
+
+    response.set_status(403)
+    return response.send("Not allowed")
 
 
 def update_message_by_id(request, response):
@@ -218,8 +230,11 @@ def login(request, response):
 def logout(request, response):
     # validate
     delete_result = delete_auth(request)
+
     if delete_result:
-        # replace with redirect
-        return response.send("Logout successful")
+        response.set_status(302)
+        response.set_header({"Location": "/"})
+
+        return response.send()
     else:
         return response.send("Logout failed")

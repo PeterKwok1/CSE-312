@@ -95,11 +95,13 @@ This course was highly reccomended by an industry professional friend.
             - long, complex
             - store hash 
             - invalidate at some time server side. 
-                - my thinking is to store it with a date and check that date upon touching it. 
+                - my thinking is to store it with a date and check that date upon validating auth. the theory is that all interactions that require auth will validate auth, including for example a home page, so there will be no leaks.
 
 ## Tickets
 - Learning Objective 2    
-    - delete messages
+    - auth expiration
+        - invalidate on expriation 
+    - post with invalid auth 
     
 
     
