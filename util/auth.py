@@ -146,3 +146,38 @@ def delete_auth(request):
         if update_result.modified_count:
             return True
     return False
+
+
+def generate_xsrf(username):
+    token = secrets.token_hex(32)
+
+    hash = hash_hex(token)
+
+    duration = 3600
+    expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        seconds=duration
+    )
+
+    # save hash
+    db.users.update_one(
+        {"username": username},
+        {"$set": {"xsrf": {"hash": hash, "expiration": expiration}}},
+    )
+
+    return token
+
+
+def validate_xsrf(username, token):
+    hex_pattern = "^[0-9a-f]+$"
+    if re.search(hex_pattern, token):
+        hash = hash_hex(token)
+        user = db.users.find_one(
+            {
+                "xsrf.hash": hash,
+                "xsrf.expiration": {"$gt": datetime.datetime.now(datetime.UTC)},
+            }
+        )
+        if user:
+            if username == user["username"]:
+                return True
+    return False

@@ -102,12 +102,17 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - Learning Objective 3
     - xsrf token
-        - add to / route
-            - / must validate auth before generating xrsf token. 
-        - generate xsrf 
-        - validate xsrf
+        - add to / route 
+            - validate auth 
+            - generate xrsf token
+            - template
+        - add to post route
+            - validate xsrf
+        - generate xsrf()
+        - validate xsrf()
         - add to template
         - add to sendChat() 
+        
 
         
     

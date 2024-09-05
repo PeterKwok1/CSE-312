@@ -9,17 +9,27 @@ from util.auth import (
     generate_auth,
     validate_auth,
     delete_auth,
+    generate_xsrf,
+    validate_xsrf,
 )
 import bcrypt
 
 
+# tree
+# treeBeard123!
+# wing
+# wingedBird123!
 def return_index(request, response):
+    # open template
+    template = open("./public/template_index.html", "rt")
+    template_str = template.read()
+
+    # visit count
     visit_count = (
         int(request.cookies["visit_count"]) + 1
         if "visit_count" in request.cookies
         else 1
     )
-
     ## replaced by Max-Age directive
     # cookie_expiration = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
     #     hours=1
@@ -30,18 +40,24 @@ def return_index(request, response):
     #         "visit_count": f"{visit_count}; Expires={cookie_expiration.strftime(date_format)}"
     #     }
     # )
-
     response.set_cookie({"visit_count": f"{visit_count}; Max-Age={3}; HttpOnly"})
+    template_update = template_str.replace(r"{{visits}}", str(visit_count))
 
-    # there maybe a cleaner way to template
-    template = open("./public/template_index.html", "rt").read()
-    template_update = template.replace(r"{{visits}}", str(visit_count))
-    file = open("./public/index.html", "wt")
-    file.write(template_update)
-    file.close()
-    file = open("./public/index.html", "rb")
+    # auth
+    user = validate_auth(request)
+    # xsrf
+    if user:
+        xsrf_token = generate_xsrf(user["username"])
+        template_update = template_str.replace(r"{{xsrf_token}}", str(xsrf_token))
 
-    return response.send(file)
+    # save template
+    index = open("./public/index.html", "wt")
+    index.write(template_update)
+    template.close()
+    index.close()
+
+    index = open("./public/index.html", "rb")
+    return response.send(index)
 
 
 def return_static_file(request, response):
@@ -71,8 +87,14 @@ def get_all_messages(request, response):
 def post_message(request, response):
     message = json.loads(request.body)
 
-    # validate
+    # auth
     user = validate_auth(request)
+    # xsrf
+    if user:
+        if not validate_xsrf(user["username"], message["xsrf_token"]):
+            response.set_status(403)
+            return response.send("submission rejected")
+
     username = user["username"] if user else "Guest"
 
     # it wasn't required, but a user could also set their username to html to perform an html injection attack since that's displayed to other users as well.

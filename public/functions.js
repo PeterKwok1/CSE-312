@@ -54,6 +54,9 @@ function sendChat() {
     const chatTextBox = document.getElementById("chat-text-box");
     const message = chatTextBox.value;
     chatTextBox.value = "";
+
+    const xsrf = document.getElementById("xsrf")
+    const xsrfToken = xsrf.value
     if (ws) {
         // Using WebSockets
         socket.send(JSON.stringify({ 'messageType': 'chatMessage', 'message': message }));
@@ -65,7 +68,7 @@ function sendChat() {
                 console.log(this.response);
             }
         }
-        const messageJSON = { "message": message };
+        const messageJSON = { "message": message, "xsrf_token": xsrfToken };
 
         request.open("POST", "/chat-messages");
         request.send(JSON.stringify(messageJSON));
