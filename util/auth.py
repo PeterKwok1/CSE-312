@@ -121,17 +121,18 @@ def generate_auth(response: object, username) -> object:
 def validate_auth(request: object) -> bool:
     # check token hash against stored hash
     if "auth_token" in request.cookies:
-        hash = hash_hex(request.cookies["auth_token"])
-        # invalidate auth on expiration -> this method may not work. it leaves them logged in.
-        # instead, find hash, if not there, return false, if expired, delete it and return false.
-        user = db.users.find_one(
-            {
-                "auth.hash": hash,
-                "auth.expiration": {"$lte": datetime.datetime.now(datetime.UTC)},
-            }
-        )
-        if user:
-            return user
+        hex_pattern = "^[0-9a-f]+$"
+        if re.search(hex_pattern, request.cookies["auth_token"]):
+            # invalidate auth on expiration
+            hash = hash_hex(request.cookies["auth_token"])
+            user = db.users.find_one(
+                {
+                    "auth.hash": hash,
+                    "auth.expiration": {"$gt": datetime.datetime.now(datetime.UTC)},
+                }
+            )
+            if user:
+                return user
     return False
 
 
