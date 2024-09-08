@@ -28,8 +28,8 @@ This course was highly reccomended by an industry professional friend.
     - 2/23: https://www.youtube.com/watch?v=rpTDAcSG1BE 
     - 2/26: https://www.youtube.com/watch?v=JYOwokooKdk 
     - 2/28: https://www.youtube.com/watch?v=PdU0X81MWU4 
-    - 3/1: https://www.youtube.com/watch?v=HZYJgwAWp34 - 
-    - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY
+    - 3/1: https://www.youtube.com/watch?v=HZYJgwAWp34 
+    - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY - 
     - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ
     - 3/8: https://www.youtube.com/watch?v=CdoobGYQido
     - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q
@@ -103,7 +103,7 @@ This course was highly reccomended by an industry professional friend.
 - HW2
     - Application Objective 1
         - OAuth - Login with Spotify
-            - lectures
+            - Button: https://youtu.be/PdU0X81MWU4?t=341 
         
 
         
