@@ -14,6 +14,8 @@ from util.controllers import (
     register,
     login,
     logout,
+    login_spotify,
+    spotify,
 )
 
 app = Router()
@@ -31,6 +33,9 @@ app.add_route("PUT", "/chat-messages/:id", update_message_by_id)
 app.add_route("POST", "/register", register)
 app.add_route("POST", "/login", login)
 app.add_route("POST", "/logout", logout)
+
+app.add_route("POST", "/login_spotify", login_spotify)
+app.add_route("POST", "/spotify", spotify)
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):

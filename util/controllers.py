@@ -1,3 +1,4 @@
+import urllib.parse
 from util.connection import db
 import json
 from util.escape_html import escape_html
@@ -13,12 +14,10 @@ from util.auth import (
     validate_xsrf,
 )
 import bcrypt
+import os
+import urllib
 
 
-# tree
-# treeBeard123!
-# wing
-# wingedBird123!
 def return_index(request, response):
     # open template
     template = open("./public/template_index.html", "rt")
@@ -219,8 +218,6 @@ def register(request, response):
     return response.send()
 
 
-# jamjong
-# jammyJong123@
 def login(request, response):
     # extract credentials
     credentials = extract_credentials(request)
@@ -260,3 +257,25 @@ def logout(request, response):
         return response.send()
     else:
         return response.send("Logout failed")
+
+
+def login_spotify(request, response):
+    scope = "user-read-currently-playing user-read-email"
+    params = {
+        "response_type": "code",
+        "client_id": os.environ["SPOTIFY_ID"],
+        "scope": scope,
+        "redirect_uri": "http://localhost:8080/spotify",
+    }
+    query_string = urllib.parse.urlencode(params)
+
+    response.set_status(302)
+    response.set_header(
+        {"Location": "https://accounts.spotify.com/authorize?" + query_string}
+    )
+
+    return response.send()
+
+
+def spotify(request, response):
+    print(response.params)

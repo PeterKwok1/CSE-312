@@ -103,7 +103,8 @@ This course was highly reccomended by an industry professional friend.
 - HW2
     - Application Objective 1
         - OAuth - Login with Spotify
-            - Button: https://youtu.be/PdU0X81MWU4?t=341 
+            - https://youtu.be/PdU0X81MWU4?t=341 
+            - handle response upon login
         
 
         

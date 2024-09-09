@@ -18,6 +18,11 @@ percent_encoding_key = {
     "%3D": "=",
 }
 
+# test accounts
+# jamjong jammyJong123@
+# tree treeBeard123!
+# wing wingedBird123!
+
 
 def decode_url_encoded_str(url_encoded_str: str) -> dict:
     # decode percent encoding
