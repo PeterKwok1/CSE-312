@@ -31,6 +31,11 @@ class Router:
             
         # compare
         for path in self.routes.keys():
+            # extract query
+            # split on ?, set request path to the right side. send left side into request.set_query
+            # request.path = 
+
+
             # detect params
             param_pattern = re.compile(":[^/]+")
             path_pattern = f"^{re.sub(param_pattern, "[^/]+", path)}$"

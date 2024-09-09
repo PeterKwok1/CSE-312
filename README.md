@@ -105,6 +105,7 @@ This course was highly reccomended by an industry professional friend.
         - OAuth - Login with Spotify
             - https://youtu.be/PdU0X81MWU4?t=341 
             - handle response upon login
+                - extract query in router
         
 
         

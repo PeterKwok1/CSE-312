@@ -16,6 +16,7 @@ from util.auth import (
 import bcrypt
 import os
 import urllib
+import requests
 
 
 def return_index(request, response):
@@ -261,21 +262,38 @@ def logout(request, response):
 
 def login_spotify(request, response):
     scope = "user-read-currently-playing user-read-email"
-    params = {
-        "response_type": "code",
-        "client_id": os.environ["SPOTIFY_ID"],
-        "scope": scope,
-        "redirect_uri": "http://localhost:8080/spotify",
-    }
-    query_string = urllib.parse.urlencode(params)
+    query = urllib.parse.urlencode(
+        {
+            "response_type": "code",
+            "client_id": os.environ["SPOTIFY_ID"],
+            "scope": scope,
+            "redirect_uri": "http://localhost:8080/spotify",
+        }
+    )
 
     response.set_status(302)
-    response.set_header(
-        {"Location": "https://accounts.spotify.com/authorize?" + query_string}
-    )
+    response.set_header({"Location": "https://accounts.spotify.com/authorize?" + query})
 
     return response.send()
 
 
 def spotify(request, response):
-    print(response.params)
+    if "error" in request.query:
+        response.set_status(401)
+        return response.send("Error login with spotify")
+
+    # compose server to server request
+    access_request = requests.post("https://accounts.spotify.com/api/token")
+    access_request_body = urllib.parse.urlencode(
+        {
+            "grant_type": "authorization_code",
+            "code": request.query["code"],
+            "redirect_uri": "http://localhost:8080/spotify",
+        }
+    )
+    # headers
+
+    # if no account, make one. generate auth
+    # db.users.insert_one({"username": username, "password": hashed_password})
+
+    print(response.query)

@@ -37,8 +37,13 @@ class Request:
 
         self.params = {}
 
+        self.query = {}
+
     def set_param(self, key: str, value: str):
         self.params[key] = value
+
+    def set_query(self, query_string):
+        pass
 
 
 def test1():
