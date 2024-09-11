@@ -43,7 +43,10 @@ class Request:
         self.params[key] = value
 
     def set_query(self, query_string):
-        pass
+        key_vals = query_string.split("&")
+        for key_val in key_vals:
+            key, val = key_val.split("=")
+            self.query[key] = val
 
 
 def test1():

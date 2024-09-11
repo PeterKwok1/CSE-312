@@ -28,13 +28,14 @@ class Router:
         if re.search("\\.\\.", request.path): # . is wildcard. otherwise this will 404 everything but "/"
             response.set_status(404)
             return response.send("404: Not Found")
+        
+        # query
+        if re.search("\\?", request.path):
+            request.path, query = request.path.split("?")
+            request.set_query(query)
             
         # compare
         for path in self.routes.keys():
-            # extract query
-            # split on ?, set request path to the right side. send left side into request.set_query
-            # request.path = 
-
 
             # detect params
             param_pattern = re.compile(":[^/]+")
