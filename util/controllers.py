@@ -17,6 +17,7 @@ import bcrypt
 import os
 import urllib
 import requests
+import base64
 
 
 def return_index(request, response):
@@ -283,7 +284,6 @@ def spotify(request, response):
         return response.send("Error login with spotify")
 
     # compose server to server request
-    access_request = requests.post("https://accounts.spotify.com/api/token")
     access_request_body = urllib.parse.urlencode(
         {
             "grant_type": "authorization_code",
@@ -291,9 +291,14 @@ def spotify(request, response):
             "redirect_uri": "http://localhost:8080/spotify",
         }
     )
-    # headers
+    access_request_headers = {
+        "Authorization": "Basic" + base64.b64encode(f"{os.environ["SPOTIFY_ID"]}:{os.environ["SPOTIFY_SECRET"]}".encode()),
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+    access_response = requests.post("https://accounts.spotify.com/api/token", data=access_request_body, headers=access_request_headers)
+
+    print(access_response)
 
     # if no account, make one. generate auth
     # db.users.insert_one({"username": username, "password": hashed_password})
 
-    print(response.query)

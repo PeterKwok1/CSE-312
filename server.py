@@ -35,7 +35,7 @@ app.add_route("POST", "/login", login)
 app.add_route("POST", "/logout", logout)
 
 app.add_route("POST", "/login_spotify", login_spotify)
-app.add_route("POST", "/spotify", spotify)
+app.add_route("GET", "/spotify", spotify)
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
