@@ -96,16 +96,26 @@ def post_message(request, response):
             response.set_status(403)
             return response.send("submission rejected")
 
-    # guest, user, spotify user, 
-    if not user:
-        username = "Guest"
-    else: 
+    # user, spotify user, guest
+    if user:
         username = user["username"] 
-        if user["access_token"]:
-            # request what user is currently listening to
-            # add authorization header (access token). if doesn't work, might be scope.
-            currently_playing_request = requests.get("https://api.spotify.com/v1/me/player/currently-playing")
-            # username += 
+        if user["access_token"]: 
+            # request current song, if true, add to username
+            request_headers = {
+                "Authorization": "Bearer" + " " + user["access_token"]
+            }
+            
+            currently_playing_response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers=request_headers)
+
+            if currently_playing_response.status_code == 200:
+                currently_playing_response_body = currently_playing_response.json()
+                current_track = currently_playing_response_body["item"]
+
+                username = username + " " + f"[{current_track["name"]}, {current_track["artists"][0]["name"]}]"      
+            else:
+                username = username + " " + "[not listening]"
+    else:
+        username = "Guest"
 
     # it wasn't required, but a user could also set their username to html to perform an html injection attack since that's displayed to other users as well.
     message_to_save = {
@@ -328,6 +338,10 @@ def spotify(request, response):
     user = db.users.find_one({"username": email})
     if not user:
         db.users.insert_one({"username": email, "access_token": access_token})
+    else:
+        db.users.update_one({"username": email}, {"$set": {"access_token": access_token}})
+    
+    test = db.users.find_one({"username": email})
 
     # generate auth
     response = generate_auth(response, email)
