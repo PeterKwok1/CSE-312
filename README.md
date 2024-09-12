@@ -104,8 +104,10 @@ This course was highly reccomended by an industry professional friend.
     - Application Objective 1
         - OAuth - Login with Spotify
             - https://youtu.be/PdU0X81MWU4?t=341 
-            - make api call with access token
-                - https://developer.spotify.com/documentation/web-api/concepts/access-token
+            - request song title and artist and add to username
+                - https://developer.spotify.com/documentation/web-api/reference/get-the-users-currently-playing-track
+                - https://requests.readthedocs.io/en/latest/user/quickstart/#response-content
+                
                 
         
 

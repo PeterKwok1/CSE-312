@@ -96,7 +96,16 @@ def post_message(request, response):
             response.set_status(403)
             return response.send("submission rejected")
 
-    username = user["username"] if user else "Guest"
+    # guest, user, spotify user, 
+    if not user:
+        username = "Guest"
+    else: 
+        username = user["username"] 
+        if user["access_token"]:
+            # request what user is currently listening to
+            # add authorization header (access token). if doesn't work, might be scope.
+            currently_playing_request = requests.get("https://api.spotify.com/v1/me/player/currently-playing")
+            # username += 
 
     # it wasn't required, but a user could also set their username to html to perform an html injection attack since that's displayed to other users as well.
     message_to_save = {
@@ -262,6 +271,7 @@ def logout(request, response):
 
 
 def login_spotify(request, response):
+    # get access code
     scope = "user-read-currently-playing user-read-email"
     query = urllib.parse.urlencode(
         {
@@ -279,12 +289,13 @@ def login_spotify(request, response):
 
 
 def spotify(request, response):
+    # recieve access code
     if "error" in request.query:
         response.set_status(401)
         return response.send("Error login with spotify")
     
 
-    # compose server to server request
+    # get access token
     access_request_body = urllib.parse.urlencode(
         {
             "grant_type": "authorization_code",
@@ -302,11 +313,31 @@ def spotify(request, response):
     if not access_response.status_code == 200:
         return response.send("Login with spotify failed")
     
-    # if no account, make one. generate auth
     access_response_body = access_response.json()
-    # db.users.insert_one({"username": username, "password": hashed_password})
+    access_token = access_response_body["access_token"]
 
-    return response.send("wow success")
+    # get user profile
+    user_request_headers = {
+        "Authorization": "Bearer" + " " + access_token
+    }
+    user_response = requests.get("https://api.spotify.com/v1/me", headers=user_request_headers)
+    user_response_body = user_response.json()
+    email = user_response_body["email"]
+
+    # if no account, make one
+    user = db.users.find_one({"username": email})
+    if not user:
+        db.users.insert_one({"username": email, "access_token": access_token})
+
+    # generate auth
+    response = generate_auth(response, email)
+
+    # spotify access tokens expire in 1 hour, so i'd likely have to refresh it using a refresh token if expired during validation. 
+
+    response.set_status(302)
+    response.set_header({"Location": "/"})
+
+    return response.send()
 
     
 
