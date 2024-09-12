@@ -282,6 +282,7 @@ def spotify(request, response):
     if "error" in request.query:
         response.set_status(401)
         return response.send("Error login with spotify")
+    
 
     # compose server to server request
     access_request_body = urllib.parse.urlencode(
@@ -292,13 +293,21 @@ def spotify(request, response):
         }
     )
     access_request_headers = {
-        "Authorization": "Basic" + base64.b64encode(f"{os.environ["SPOTIFY_ID"]}:{os.environ["SPOTIFY_SECRET"]}".encode()),
+        "Authorization": "Basic" + " " + base64.b64encode(f"{os.environ["SPOTIFY_ID"]}:{os.environ["SPOTIFY_SECRET"]}".encode()).decode(),
         "Content-Type": "application/x-www-form-urlencoded",
     }
     access_response = requests.post("https://accounts.spotify.com/api/token", data=access_request_body, headers=access_request_headers)
 
-    print(access_response)
 
+    if not access_response.status_code == 200:
+        return response.send("Login with spotify failed")
+    
     # if no account, make one. generate auth
+    access_response_body = access_response.json()
     # db.users.insert_one({"username": username, "password": hashed_password})
 
+    return response.send("wow success")
+
+    
+
+    

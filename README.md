@@ -104,8 +104,9 @@ This course was highly reccomended by an industry professional friend.
     - Application Objective 1
         - OAuth - Login with Spotify
             - https://youtu.be/PdU0X81MWU4?t=341 
-            - handle response upon login
-                - fix base64 err
+            - make api call with access token
+                - https://developer.spotify.com/documentation/web-api/concepts/access-token
+                
         
 
         
