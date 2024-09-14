@@ -29,9 +29,9 @@ This course was highly reccomended by an industry professional friend.
     - 2/26: https://www.youtube.com/watch?v=JYOwokooKdk 
     - 2/28: https://www.youtube.com/watch?v=PdU0X81MWU4 
     - 3/1: https://www.youtube.com/watch?v=HZYJgwAWp34 
-    - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY - 
-    - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ
-    - 3/8: https://www.youtube.com/watch?v=CdoobGYQido
+    - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY 
+    - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ  
+    - 3/8: https://www.youtube.com/watch?v=CdoobGYQido -
     - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q
     - 3/13: https://www.youtube.com/watch?v=UYa29P30154
     - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc
@@ -100,13 +100,12 @@ This course was highly reccomended by an industry professional friend.
             - not as sensitive as auth token but should store hash too. 
 
 ## Tickets
-- HW2
-    - Application Objective 1
-        - OAuth - Login with Spotify
-            - https://youtu.be/PdU0X81MWU4?t=341 
-            - request song title and artist and add to username
-                - https://developer.spotify.com/documentation/web-api/reference/get-the-users-currently-playing-track
-                - https://requests.readthedocs.io/en/latest/user/quickstart/#response-content
+- HW3
+    - Lectures
+    - Break up request functions to be reused for multipart form data. 
+        - https://youtu.be/zsQRRMgEDeQ?t=1057
+        - abstract header body separation and header parsing. 
+
                 
                 
         
