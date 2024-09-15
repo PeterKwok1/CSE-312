@@ -1,21 +1,25 @@
+from util.http_utils import split_request, extract_headers
+import re
+from util.multipart import parse_multipart
+
+
 class Request:
 
     def __init__(self, request: bytes):
         # TODO: parse the bytes of the request and populate the following instance variables
 
-        header, body = request.split("\r\n\r\n".encode("utf-8"), 1)
+        # parse request
+        header, body = split_request(request)
 
-        header = header.decode("utf-8").split("\r\n")
-        request_line = header[0].split(" ")
+        request_line, headers = header.split("\r\n", 1)
+
+        request_line = request_line.split(" ")
 
         self.method = request_line[0]  # str
         self.path = request_line[1]  # str
         self.http_version = request_line[2]  # str
 
-        self.headers = {}
-        for header_field in header[1:]:
-            header_field = header_field.split(":", 1)
-            self.headers[header_field[0]] = header_field[1].strip(" ")
+        self.headers = extract_headers(headers)
 
         self.cookies = {}
         if "Cookie" in self.headers:
@@ -28,12 +32,14 @@ class Request:
             content_type = self.headers["Content-Type"]
             content_length = int(self.headers["Content-Length"])
 
+            self.body = body[0:content_length]
+
             if content_type == "text/plain;charset=UTF-8":
-                self.body = body.decode("utf-8")[0:content_length]
+                self.body = body.decode("utf-8")
             elif content_type == "application/x-www-form-urlencoded":
-                self.body = body.decode("utf-8")[0:content_length]
-            else:
-                self.body = body[0:content_length]
+                self.body = body.decode("utf-8")
+            elif re.search("multipart/form-data", content_type):
+                self.body = parse_multipart(self)
 
         self.params = {}
 

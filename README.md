@@ -104,7 +104,9 @@ This course was highly reccomended by an industry professional friend.
     - Lectures
     - Break up request functions to be reused for multipart form data. 
         - https://youtu.be/zsQRRMgEDeQ?t=1057
-        - abstract header body separation and header parsing. 
+        - fix name bug 
+            - create extract_parameters() 
+
 
                 
                 
