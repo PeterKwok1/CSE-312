@@ -31,7 +31,7 @@ This course was highly reccomended by an industry professional friend.
     - 3/1: https://www.youtube.com/watch?v=HZYJgwAWp34 
     - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY 
     - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ  
-    - 3/8: https://www.youtube.com/watch?v=CdoobGYQido -
+    - 3/8: https://www.youtube.com/watch?v=CdoobGYQido - https://youtu.be/CdoobGYQido?t=2457
     - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q
     - 3/13: https://www.youtube.com/watch?v=UYa29P30154
     - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc
@@ -68,7 +68,6 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=i-h0CtKde6w
 
 ## Notes
-- Chrome seems to automatically simplify paths containing ".." but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
 - Security 
     - HTML Injection 
         - Escape code sent by users
@@ -79,12 +78,17 @@ This course was highly reccomended by an industry professional friend.
             - HttpOnly 
             - Secure 
     - Path
-        - Prevent users from accessing files outside of directory
+        - Prevent users from accessing arbitrary files 
+            - remove / after intended path 
+            - maintain a list of all valid files to be requested. return 400-level response if any other file is requested. 
+            - browsers automatically simplify ".." in paths but, as verified with postman, it can be sent in a request and is a way for users to leave the intended directory. 
+    - User submitted content
+        - Use your own file naming convention 
     - SQL
         - Prepared statements 
     - Docker 
     - Auth
-        - never trust your front end. 
+        - there is no such thing as front end security.  
             - perform all checks server side. 
         - password
             - long, complex
@@ -101,11 +105,17 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - HW3
-    - Lectures
-    - Break up request functions to be reused for multipart form data. 
-        - https://youtu.be/zsQRRMgEDeQ?t=1057
-        - fix name bug 
-            - create extract_parameters() 
+    - LO2
+        - Lectures, Finish 3/8/24
+        - Remove preventing .. in favor of / after intended path to prevent hacking. 
+            - i think this type of logic doesn't go in router because it wouldn't know what we intend to do with the path. the controller extracts and processes the information. 
+            - may need multiple public routes. or the public controller can extract the filename after the intended subdirectories and remove /'s. 
+        - buffer requests 
+            - https://youtu.be/CdoobGYQido?t=1628
+            - do not keep reading bytes if done. 
+            - no need to read bytes if no content length header. 
+            - note that chrome sends headers apart from content but other browsers don't. 
+                - as a result, buffer based on content-length, not whether the buffer is full. 
 
 
                 

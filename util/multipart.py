@@ -7,6 +7,9 @@ class multipart_body:
         self.boundary = boundary
         self.parts = parts
 
+    def __str__(self) -> str:
+        return {"boundary": self.boundary, "parts": self.parts}
+
 
 class multipart_part:
     def __init__(self, headers: dict, name: str, content: bytes) -> None:
@@ -14,6 +17,9 @@ class multipart_part:
         self.headers = headers
         self.name = name
         self.content = content
+
+    def __str__(self) -> str:
+        return {"headers": self.headers, "name": self.name, "content": self.content}
 
 
 def parse_multipart(request: object) -> object:
@@ -39,22 +45,27 @@ def parse_multipart(request: object) -> object:
     # for each part:
     for i, part in enumerate(request.body):
         # split header body
-        header, body = split_request(part)
+        header, content = split_request(part)
         # extract headers
         headers = extract_headers(header)
+        # extract name
+        # I don't see a reason to abstract this logic. I only need the name so far and it is slightly different than cookie parsing.
+        # Content-Disposition: form-data; name="field_one"
+        name = (
+            re.search("name=[^ ]+", headers["Content-Disposition"])
+            .group()
+            .split("=")[1]
+        )
         # decode string bodies, else bytes
         if not "Content-Type" in headers:
-            body = body.decode()
+            content = content.decode()
         # add headers, name, content to object
-        request.body[0] = multipart_part(headers, headers["name"], body)
-
-    print(request.body)
-    print(request.body[0].headers, request.body[0].name, request.body[0].body)
-
-    return None
+        request.body[i] = multipart_part(headers, name, content)
 
     # add boundary, parts to object
+    request.body = multipart_body(boundary, request.body)
     # return object
+    return request.body
 
 
 # POST /profile-pic HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nContent-Length: 246\r\nCache-Control: max-age=0\r\nsec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"\r\nsec-ch-ua-mobile: ?0\r\nsec-ch-ua-platform: "Windows"\r\nUpgrade-Insecure-Requests: 1\r\nOrigin: http://localhost:8080\r\nContent-Type: multipart/form-data; boundary=----WebKitFormBoundaryoTlVpYBiYGonzLkT\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-User: ?1\r\nSec-Fetch-Dest: document\r\nReferer: http://localhost:8080/\r\nAccept-Encoding: gzip, deflate, br, zstd\r\nAccept-Language: en-US,en;q=0.9\r\n\r\n------WebKitFormBoundaryoTlVpYBiYGonzLkT\r\nContent-Disposition: form-data; name="field_one"\r\n\r\nwater\r\n------WebKitFormBoundaryoTlVpYBiYGonzLkT\r\nContent-Disposition: form-data; name="field_two"\r\n\r\nmelon\r\n------WebKitFormBoundaryoTlVpYBiYGonzLkT--\r\n
