@@ -18,6 +18,7 @@ import os
 import urllib
 import requests
 import base64
+import re
 
 
 def return_index(request, response):
@@ -62,7 +63,22 @@ def return_index(request, response):
 
 
 def return_static_file(request, response):
-    file = open(f".{request.path}", "rb")
+
+    # validate
+    # only allow intended subdirectories by removing /
+    if re.search("^/public/image/", request.path):
+        directory = "/public/image/"
+        filename = request.path.replace("/public/image/", "").replace("/", "")
+    elif re.search("^/public/", request.path):
+        directory = "/public/"
+        filename = request.path.replace("/public/", "").replace("/", "")
+    request.path = directory + filename
+
+    try:
+        file = open(f".{request.path}", "rb")
+    except:
+        response.set_status(404)
+        return response.send("404: Not Found")
 
     return response.send(file)
 

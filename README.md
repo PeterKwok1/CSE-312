@@ -31,8 +31,8 @@ This course was highly reccomended by an industry professional friend.
     - 3/1: https://www.youtube.com/watch?v=HZYJgwAWp34 
     - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY 
     - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ  
-    - 3/8: https://www.youtube.com/watch?v=CdoobGYQido - https://youtu.be/CdoobGYQido?t=2457
-    - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q
+    - 3/8: https://www.youtube.com/watch?v=CdoobGYQido 
+    - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q - 
     - 3/13: https://www.youtube.com/watch?v=UYa29P30154
     - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc
     - 3/25: https://www.youtube.com/watch?v=GrDNY7yQebk
@@ -106,10 +106,6 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - HW3
     - LO2
-        - Lectures, Finish 3/8/24
-        - Remove preventing .. in favor of / after intended path to prevent hacking. 
-            - i think this type of logic doesn't go in router because it wouldn't know what we intend to do with the path. the controller extracts and processes the information. 
-            - may need multiple public routes. or the public controller can extract the filename after the intended subdirectories and remove /'s. 
         - buffer requests 
             - https://youtu.be/CdoobGYQido?t=1628
             - do not keep reading bytes if done. 

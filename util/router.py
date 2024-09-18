@@ -23,11 +23,6 @@ class Router:
     # route request to loaded routes
     def route_request(self, request: object, response: object) -> bytearray:
         # I'm essentially defining middleware here. 
-
-        # validate
-        if re.search("\\.\\.", request.path): # . is wildcard. otherwise this will 404 everything but "/"
-            response.set_status(404)
-            return response.send("404: Not Found")
         
         # query
         if re.search("\\?", request.path):
