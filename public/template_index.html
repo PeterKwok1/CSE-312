@@ -44,6 +44,14 @@
             </div>
             <input id="xsrf" value="{{xsrf_token}}" name="xsrf_token" hidden>
 
+            <form action="/chat-pic" id="chat-pic-form" method="post" enctype="multipart/form-data">
+                <br />
+                <label for="pic-file">Pic: </label>
+                <input id="pic-file" type="file" name="upload">
+                <input type="submit" value="Post">
+            </form>
+
+
         </div>
 
         <div class="video-chat">
@@ -96,13 +104,8 @@
 
             <form action="/profile-pic" id="image-form" method="post" enctype="multipart/form-data">
                 <br />
-                <!-- <label for="form-file">Change profile picture: </label>
-                <input id="form-file" type="file" name="upload"> -->
-                <label for="one">Field One: </label>
-                <input id="one" type="text" name="field_one">
-                <label for="two">Field Two: </label>
-                <input id="two" type="text" name="field_two">
-                <br />
+                <label for="form-file">Change profile picture: </label>
+                <input id="form-file" type="file" name="upload">
                 <input type="submit" value="Post">
             </form>
 

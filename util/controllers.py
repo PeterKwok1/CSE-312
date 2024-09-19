@@ -223,6 +223,10 @@ def update_message_by_id(request, response):
     response.set_status(404)
     return response.send("Update Unsuccessful")
 
+def post_pic(request, response):
+    print(request.headers)
+    print(request.body.parts[0].content)
+    return response.send("works")
 
 def register(request, response):
     # extract credentials
