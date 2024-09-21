@@ -112,7 +112,7 @@ This course was highly reccomended by an industry professional friend.
             - no need to read bytes if no content length header. 
             - note that chrome sends headers apart from content but other browsers don't. 
                 - as a result, buffer based on content-length, not whether the buffer is full. 
-            - fix extract_headers bug in buffer. I think it's cuz I didn't parse requeset line out.
+            - test download bytes as img. 
         - image upload
 
 

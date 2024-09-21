@@ -1,4 +1,4 @@
-from util.http_utils import split_request, extract_headers
+from util.http_utils import split_request, split_header, extract_headers
 
 
 def recieve(socket, n_bytes):
@@ -11,14 +11,19 @@ def recieve(socket, n_bytes):
 
 
 def buffer(socket):
-    buffer_size = 2048
+    buffer_size = 1024
 
     received_data = recieve(socket, buffer_size)
     header, body = split_request(received_data)
-    headers = extract_headers(header)
+    request_line, headers = split_header(header)
+    headers = extract_headers(headers)
 
     if "Content-Length" in headers:
-        expected_len = len(header.encode()) + headers["Content-Length"]
+        expected_len = (
+            len(header.encode())
+            + len("\r\n\r\n".encode())
+            + int(headers["Content-Length"])
+        )
         remaining_len = expected_len - len(received_data)
 
         if remaining_len > 0:

@@ -4,6 +4,14 @@ def split_request(request: bytes) -> list:
     return [head, body]
 
 
+def split_header(header: str) -> list:
+    return header.split("\r\n", 1)
+
+
+def extract_request_line(request_line: str) -> list:
+    return request_line.split(" ")
+
+
 def extract_headers(headers_str) -> dict:
     header_dict = {}
     headers_list = headers_str.split("\r\n")

@@ -224,7 +224,10 @@ def update_message_by_id(request, response):
     return response.send("Update Unsuccessful")
 
 def post_pic(request, response):
+    print("\r\n")
+    print('FULL REQUEST')
     print(request.headers)
+    print(f'Length: {len(request.body.parts[0].content)}')
     print(request.body.parts[0].content)
     return response.send("works")
 

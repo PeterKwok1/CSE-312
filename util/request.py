@@ -1,4 +1,9 @@
-from util.http_utils import split_request, extract_headers
+from util.http_utils import (
+    split_request,
+    split_header,
+    extract_request_line,
+    extract_headers,
+)
 import re
 from util.multipart import parse_multipart
 
@@ -11,13 +16,13 @@ class Request:
         # parse request
         header, body = split_request(request)
 
-        request_line, headers = header.split("\r\n", 1)
+        request_line, headers = split_header(header)
 
-        request_line = request_line.split(" ")
+        method, path, http_version = extract_request_line(request_line)
 
-        self.method = request_line[0]  # str
-        self.path = request_line[1]  # str
-        self.http_version = request_line[2]  # str
+        self.method = method
+        self.path = path
+        self.http_version = http_version
 
         self.headers = extract_headers(headers)
 
