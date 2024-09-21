@@ -224,11 +224,19 @@ def update_message_by_id(request, response):
     return response.send("Update Unsuccessful")
 
 def post_pic(request, response):
-    print("\r\n")
-    print('FULL REQUEST')
-    print(request.headers)
-    print(f'Length: {len(request.body.parts[0].content)}')
-    print(request.body.parts[0].content)
+    # print("\r\n")
+    # print('FULL REQUEST')
+    # print(request.headers)
+    # print(f'Length: {len(request.body.parts[0].content)}')
+    # print(request.body.parts[0].content)
+
+    # Images will be saved to container. 
+    with open("./public/user_images/1.jpg", "wb") as user_image:
+        user_image.write(request.body.parts[0].content)
+
+    response.set_status(302)
+    response.set_header({"Location": "/"})
+
     return response.send("works")
 
 def register(request, response):
