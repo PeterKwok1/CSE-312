@@ -1,5 +1,9 @@
 def split_request(request: bytes) -> list:
-    head, body = request.split("\r\n\r\n".encode("utf-8"), 1)
+    if not request.find("\r\n\r\n".encode("utf-8")) == -1:
+        head, body = request.split("\r\n\r\n".encode("utf-8"), 1)
+    else:
+        head = request
+        body = None
     head = head.decode()
     return [head, body]
 

@@ -13,12 +13,14 @@ from util.auth import (
     generate_xsrf,
     validate_xsrf,
 )
+from util.spotify_utils import get_current_song
 import bcrypt
 import os
 import urllib
-import requests
 import base64
 import re
+import uuid
+import requests
 
 
 def return_index(request, response):
@@ -69,6 +71,9 @@ def return_static_file(request, response):
     if re.search("^/public/image/", request.path):
         directory = "/public/image/"
         filename = request.path.replace("/public/image/", "").replace("/", "")
+    elif re.search("^/public/user_images/", request.path):
+        directory = "/public/user_images/"
+        filename = request.path.replace("/public/user_images/", "").replace("/", "")
     elif re.search("^/public/", request.path):
         directory = "/public/"
         filename = request.path.replace("/public/", "").replace("/", "")
@@ -100,7 +105,6 @@ def get_all_messages(request, response):
     response.set_status(200)
     return response.send(messages)
 
-
 def post_message(request, response):
     message = json.loads(request.body)
 
@@ -116,20 +120,7 @@ def post_message(request, response):
     if user:
         username = user["username"] 
         if user["access_token"]: 
-            # request current song, if true, add to username
-            request_headers = {
-                "Authorization": "Bearer" + " " + user["access_token"]
-            }
-            
-            currently_playing_response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers=request_headers)
-
-            if currently_playing_response.status_code == 200:
-                currently_playing_response_body = currently_playing_response.json()
-                current_track = currently_playing_response_body["item"]
-
-                username = username + " " + f"[{current_track["name"]}, {current_track["artists"][0]["name"]}]"      
-            else:
-                username = username + " " + "[not listening]"
+            username = username + " " + get_current_song(user["access_token"])
     else:
         username = "Guest"
 
@@ -147,7 +138,7 @@ def post_message(request, response):
         {"_id": ObjectId(message_save_result.inserted_id)}
     )
 
-    # convert objectId to str to match json format k
+    # convert objectId to str to match json format 
     message_saved["_id"] = str(message_saved["_id"])
 
     response.set_status(201)
@@ -230,14 +221,36 @@ def post_pic(request, response):
     # print(f'Length: {len(request.body.parts[0].content)}')
     # print(request.body.parts[0].content)
 
+    # auth
+    user = validate_auth(request)
+
+    # user, spotify user, guest
+    if user:
+        username = user["username"] 
+        if user["access_token"]: 
+            username = username + " " + get_current_song(user["access_token"])
+    else:
+        username = "Guest"
+
+    # save file
+    filename = str(uuid.uuid4()) + ".jpg"
+
     # Images will be saved to container. 
-    with open("./public/user_images/1.jpg", "wb") as user_image:
+    with open(f"./public/user_images/{filename}", "wb") as user_image:
         user_image.write(request.body.parts[0].content)
+
+    message_to_save = {
+        "username": username,
+        "message": f'<img src="/public/user_images/{filename}" alt="{username}\'s image">',
+    }
+
+    # save message
+    db.message_collection.insert_one(message_to_save)
 
     response.set_status(302)
     response.set_header({"Location": "/"})
 
-    return response.send("works")
+    return response.send()
 
 def register(request, response):
     # extract credentials
