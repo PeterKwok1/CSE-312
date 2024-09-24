@@ -106,8 +106,8 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - HW3
     - LO2
-        - fix delete
-            - change front end and back end to save current song apart from username
+        
+            
 
 
                 

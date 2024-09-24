@@ -93,14 +93,9 @@ def get_all_messages(request, response):
     messages = list(db.message_collection.find())
 
     # json data types do not include mongo ObjectId's.
-    messages = [
-        {
-            "id": str(message["_id"]),
-            "username": message["username"],
-            "message": message["message"],
-        }
-        for message in messages
-    ]
+    for i in range(len(messages)):
+        messages[i]["id"] = str(messages[i]["_id"])
+        del messages[i]["_id"]
 
     response.set_status(200)
     return response.send(messages)
@@ -119,14 +114,18 @@ def post_message(request, response):
     # user, spotify user, guest
     if user:
         username = user["username"] 
-        if user["access_token"]: 
-            username = username + " " + get_current_song(user["access_token"])
+        if "access_token" in user: 
+            current_song = get_current_song(user["access_token"])
+        else:
+            current_song = None
     else:
         username = "Guest"
+        current_song = None
 
     # it wasn't required, but a user could also set their username to html to perform an html injection attack since that's displayed to other users as well.
     message_to_save = {
         "username": username,
+        "current_song": current_song,
         "message": escape_html(message["message"]),
     }
 
@@ -227,11 +226,14 @@ def post_pic(request, response):
     # user, spotify user, guest
     if user:
         username = user["username"] 
-        if user["access_token"]: 
-            username = username + " " + get_current_song(user["access_token"])
+        if "access_token" in user: 
+            current_song = get_current_song(user["access_token"])
+        else:
+            current_song = None
     else:
         username = "Guest"
-
+        current_song = None
+        
     # save file
     filename = str(uuid.uuid4()) + ".jpg"
 
@@ -241,6 +243,7 @@ def post_pic(request, response):
 
     message_to_save = {
         "username": username,
+        "current_song": current_song,
         "message": f'<img src="/public/user_images/{filename}" alt="{username}\'s image">',
     }
 
