@@ -252,7 +252,7 @@ def post_pic(request, response):
 
     response.set_status(302)
     response.set_header({"Location": "/"})
-
+    
     return response.send()
 
 def register(request, response):

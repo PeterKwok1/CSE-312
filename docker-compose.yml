@@ -5,7 +5,12 @@ services:
       - "8080:8080"
     env_file:
       - .env.python
+    volumes:
+      - user_images:/usr/src/app/public/user_images
   mongo:
     image: mongo
     env_file:
       - .env.mongo
+
+volumes:
+  user_images:
