@@ -14,6 +14,12 @@ def buffer(socket):
     buffer_size = 2048
 
     received_data = recieve(socket, buffer_size)
+
+    print(socket.client_address)
+    print("--- received data ---")
+    print(received_data)
+    print("--- end of data ---\n\n")
+
     header, body = split_request(received_data)
     request_line, headers = split_header(header)
     headers = extract_headers(headers)

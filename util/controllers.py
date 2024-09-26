@@ -21,13 +21,7 @@ import base64
 import re
 import uuid
 import requests
-
-file_signature_key = {
-    'jpg': 'FFD8FFE0',
-    'png': '89504E470D0A1A0A',
-    'gif': '47494638',
-    'mp4': '66747970'
-}
+from util.file_extension import get_file_extension
 
 def return_index(request, response):
     # open template
@@ -74,12 +68,13 @@ def return_static_file(request, response):
 
     # validate
     # only allow intended subdirectories by removing /
+    # thinking back, I could have added these as separate routes and abstracted the remove "/" logic. multiple public paths is probably fine. in hindsight, i'd have to break up return_static_file() for each. 
     if re.search("^/public/image/", request.path):
         directory = "/public/image/"
         filename = request.path.replace("/public/image/", "").replace("/", "")
-    elif re.search("^/public/user_images/", request.path):
-        directory = "/public/user_images/"
-        filename = request.path.replace("/public/user_images/", "").replace("/", "")
+    elif re.search("^/public/user_media/", request.path):
+        directory = "/public/user_media/"
+        filename = request.path.replace("/public/user_media/", "").replace("/", "")
     elif re.search("^/public/", request.path):
         directory = "/public/"
         filename = request.path.replace("/public/", "").replace("/", "")
@@ -241,16 +236,23 @@ def post_media(request, response):
         current_song = None
         
     # save file
-    filename = str(uuid.uuid4()) + ".jpg"
+    file_extension = get_file_extension(request.body.parts[0].content)
+
+    filename = str(uuid.uuid4()) + "." + file_extension
 
     # Images will be saved to container. 
-    with open(f"./public/user_images/{filename}", "wb") as user_image:
-        user_image.write(request.body.parts[0].content)
+    with open(f"./public/user_media/{filename}", "wb") as user_media:
+        user_media.write(request.body.parts[0].content)
+    
+    if file_extension == "mp4":
+        message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><src="/public/user_media/{filename}" type="video/mp4"></video>'
+    else:
+        message = f'<img src="/public/user_media/{filename}" height="240" width="320" alt="{username}\'s media">'
 
     message_to_save = {
         "username": username,
         "current_song": current_song,
-        "message": f'<img src="/public/user_images/{filename}" alt="{username}\'s image">',
+        "message": message
     }
 
     # save message

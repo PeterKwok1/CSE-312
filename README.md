@@ -106,7 +106,10 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - HW3
     - LO3
-        - Lecture
+        - test file extensions
+        - test small video
+        - test large video
+        - fix: large file buffering
             
                 
         

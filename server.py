@@ -32,7 +32,7 @@ app.add_route("GET", "/chat-messages/:id", get_message_by_id)
 app.add_route("DELETE", "/chat-messages/:id", delete_message_by_id)
 app.add_route("PUT", "/chat-messages/:id", update_message_by_id)
 
-app.add_route("POST", "/chat-pic", post_media)
+app.add_route("POST", "/chat-media", post_media)
 
 app.add_route("POST", "/register", register)
 app.add_route("POST", "/login", login)

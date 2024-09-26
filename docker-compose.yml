@@ -6,11 +6,11 @@ services:
     env_file:
       - .env.python
     volumes:
-      - user_images:/usr/src/app/public/user_images
+      - user_media:/usr/src/app/public/user_media
   mongo:
     image: mongo
     env_file:
       - .env.mongo
 
 volumes:
-  user_images:
+  user_media:
