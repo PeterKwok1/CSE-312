@@ -32,8 +32,8 @@ This course was highly reccomended by an industry professional friend.
     - 3/4: https://www.youtube.com/watch?v=2TX1ax9aGHY 
     - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ  
     - 3/8: https://www.youtube.com/watch?v=CdoobGYQido 
-    - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q - https://youtu.be/hW1LJcGMQ8Q?t=2348
-    - 3/13: https://www.youtube.com/watch?v=UYa29P30154
+    - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q 
+    - 3/13: https://www.youtube.com/watch?v=UYa29P30154 - 
     - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc
     - 3/25: https://www.youtube.com/watch?v=GrDNY7yQebk
     - 3/27: https://www.youtube.com/watch?v=sKrGywjq040&t=13s

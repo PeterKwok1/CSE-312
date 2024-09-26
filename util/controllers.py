@@ -22,6 +22,12 @@ import re
 import uuid
 import requests
 
+file_signature_key = {
+    'jpg': 'FFD8FFE0',
+    'png': '89504E470D0A1A0A',
+    'gif': '47494638',
+    'mp4': '66747970'
+}
 
 def return_index(request, response):
     # open template
@@ -213,7 +219,7 @@ def update_message_by_id(request, response):
     response.set_status(404)
     return response.send("Update Unsuccessful")
 
-def post_pic(request, response):
+def post_media(request, response):
     # print("\r\n")
     # print('FULL REQUEST')
     # print(request.headers)

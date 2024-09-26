@@ -11,7 +11,7 @@ from util.controllers import (
     get_message_by_id,
     delete_message_by_id,
     update_message_by_id,
-    post_pic,
+    post_media,
     register,
     login,
     logout,
@@ -32,7 +32,7 @@ app.add_route("GET", "/chat-messages/:id", get_message_by_id)
 app.add_route("DELETE", "/chat-messages/:id", delete_message_by_id)
 app.add_route("PUT", "/chat-messages/:id", update_message_by_id)
 
-app.add_route("POST", "/chat-pic", post_pic)
+app.add_route("POST", "/chat-pic", post_media)
 
 app.add_route("POST", "/register", register)
 app.add_route("POST", "/login", login)
