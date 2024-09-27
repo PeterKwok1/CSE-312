@@ -33,7 +33,7 @@ This course was highly reccomended by an industry professional friend.
     - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ  
     - 3/8: https://www.youtube.com/watch?v=CdoobGYQido 
     - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q 
-    - 3/13: https://www.youtube.com/watch?v=UYa29P30154 - 
+    - 3/13: https://www.youtube.com/watch?v=UYa29P30154 - https://youtu.be/UYa29P30154?t=599
     - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc
     - 3/25: https://www.youtube.com/watch?v=GrDNY7yQebk
     - 3/27: https://www.youtube.com/watch?v=sKrGywjq040&t=13s
@@ -105,11 +105,10 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - HW3
-    - LO3
-        - test file extensions
-        - test small video
-        - test large video
-        - fix: large file buffering
+    - Serve hangs and docker crashes on large file uploads
+    - Currently, can't seek video or audio because server doesn't handle range requests 
+        - https://stackoverflow.com/questions/8088364/html5-video-will-not-loop
+    - A02
             
                 
         

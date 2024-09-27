@@ -18,6 +18,9 @@ content_type_key = {
     "js": "text/javascript",
     "jpg": "image/jpeg",
     "ico": "image/vnd.microsoft.icon",
+    "png": "image/png",
+    "gif": "image/gif",
+    "mp4": "video/mp4",
 }
 
 

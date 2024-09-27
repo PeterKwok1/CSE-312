@@ -215,12 +215,6 @@ def update_message_by_id(request, response):
     return response.send("Update Unsuccessful")
 
 def post_media(request, response):
-    # print("\r\n")
-    # print('FULL REQUEST')
-    # print(request.headers)
-    # print(f'Length: {len(request.body.parts[0].content)}')
-    # print(request.body.parts[0].content)
-
     # auth
     user = validate_auth(request)
 
@@ -245,7 +239,7 @@ def post_media(request, response):
         user_media.write(request.body.parts[0].content)
     
     if file_extension == "mp4":
-        message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><src="/public/user_media/{filename}" type="video/mp4"></video>'
+        message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><source src="/public/user_media/{filename}" type="video/mp4"></video>'
     else:
         message = f'<img src="/public/user_media/{filename}" height="240" width="320" alt="{username}\'s media">'
 
