@@ -33,8 +33,8 @@ This course was highly reccomended by an industry professional friend.
     - 3/6: https://www.youtube.com/watch?v=zsQRRMgEDeQ  
     - 3/8: https://www.youtube.com/watch?v=CdoobGYQido 
     - 3/11: https://www.youtube.com/watch?v=hW1LJcGMQ8Q 
-    - 3/13: https://www.youtube.com/watch?v=UYa29P30154 - https://youtu.be/UYa29P30154?t=2291
-    - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc
+    - 3/13: https://www.youtube.com/watch?v=UYa29P30154 
+    - 3/15: https://www.youtube.com/watch?v=_RDaOpcsTEc - https://youtu.be/_RDaOpcsTEc?t=74
     - 3/25: https://www.youtube.com/watch?v=GrDNY7yQebk
     - 3/27: https://www.youtube.com/watch?v=sKrGywjq040&t=13s
 
@@ -109,6 +109,16 @@ This course was highly reccomended by an industry professional friend.
     - Currently, can't seek video or audio because server doesn't handle range requests 
         - https://stackoverflow.com/questions/8088364/html5-video-will-not-loop
     - A02
+        - Try renamed and smaller mp4's 
+            - check log for complete bytes of file 
+                - check length 
+            - check return
+                - check if more bytes can be read
+                - check prof's bug return solution 
+            - buffer() hangs before adding remainder. the accumlated len of bytes recieved stop being divisble by 2048 before adding the remainder, meaning at some point recv() doesn't get 2048. my theory is that it's asking for the remainder after it's been recieved. 
+                - however, i don't understand why, if it hangs, the data was still passed into request, routed, and processed, even the server didn't send a response. 
+
+
             
                 
         

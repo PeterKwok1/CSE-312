@@ -15,10 +15,10 @@ def buffer(socket):
 
     received_data = recieve(socket, buffer_size)
 
-    print(socket.client_address)
-    print("--- received data ---")
-    print(received_data)
-    print("--- end of data ---\n\n")
+    # print(socket.client_address)
+    # print("--- received data ---")
+    # print(received_data)
+    # print("--- end of data ---\n\n")
 
     header, body = split_request(received_data)
     request_line, headers = split_header(header)
@@ -32,11 +32,22 @@ def buffer(socket):
         )
         remaining_len = expected_len - len(received_data)
 
+        print("EXPECTED LENGTH", expected_len)
+        print("REMAINING LENGTH", remaining_len)
+
         if remaining_len > 0:
 
             remainder = remaining_len % buffer_size
+
             while len(received_data) < (expected_len - remainder):
                 received_data += recieve(socket, buffer_size)
+
+                print("RECEIEVED DATA", len(received_data))
+
             received_data += recieve(socket, remainder)
+
+            print("RECEIEVED DATA AFTER REMAINDER", len(received_data))
+
+        print("WORKS")
 
     return received_data

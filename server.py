@@ -51,6 +51,11 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
         response = Response()
 
+        # print("WORKS")
+
+        # if hasattr(request, "body"):
+        #     print(len(request.body.parts[0].content))
+
         # route request
         response_bytes = app.route_request(request, response)
         self.request.sendall(response_bytes)
