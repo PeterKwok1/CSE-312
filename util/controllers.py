@@ -229,28 +229,28 @@ def post_media(request, response):
         username = "Guest"
         current_song = None
         
-    # # save file
-    # file_extension = get_file_extension(request.body.parts[0].content)
+    # save file
+    file_extension = get_file_extension(request.body.parts[0].content)
 
-    # filename = str(uuid.uuid4()) + "." + file_extension
+    filename = str(uuid.uuid4()) + "." + file_extension
 
-    # # Images will be saved to container. 
-    # with open(f"./public/user_media/{filename}", "wb") as user_media:
-    #     user_media.write(request.body.parts[0].content)
+    # Images will be saved to container. 
+    with open(f"./public/user_media/{filename}", "wb") as user_media:
+        user_media.write(request.body.parts[0].content)
     
-    # if file_extension == "mp4":
-    #     message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><source src="/public/user_media/{filename}" type="video/mp4"></video>'
-    # else:
-    #     message = f'<img src="/public/user_media/{filename}" height="240" width="320" alt="{username}\'s media">'
+    if file_extension == "mp4":
+        message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><source src="/public/user_media/{filename}" type="video/mp4"></video>'
+    else:
+        message = f'<img src="/public/user_media/{filename}" height="240" width="320" alt="{username}\'s media">'
 
-    # message_to_save = {
-    #     "username": username,
-    #     "current_song": current_song,
-    #     "message": message
-    # }
+    message_to_save = {
+        "username": username,
+        "current_song": current_song,
+        "message": message
+    }
 
-    # # save message
-    # db.message_collection.insert_one(message_to_save)
+    # save message
+    db.message_collection.insert_one(message_to_save)
 
     response.set_status(302)
     response.set_header({"Location": "/"})
