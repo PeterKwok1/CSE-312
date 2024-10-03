@@ -120,6 +120,8 @@ This course was highly reccomended by an industry professional friend.
             - clean up buffer()
                 - remove recieve() prob
             - it seems to work except that on large uploads, it throws broken pipe error, but still seems to work. 
+            - small and large files can cause the error, but larger ones seem more consistent.
+                - clean up and try profs bug solution / returning upon catching error. 
 
 
             

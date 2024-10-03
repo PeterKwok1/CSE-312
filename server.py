@@ -58,9 +58,10 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
         # route request
         response_bytes = app.route_request(request, response)
+
         self.request.sendall(response_bytes)
 
-        # TODO: Parse the HTTP request and use self.request.sendall(response) to send your response
+    # TODO: Parse the HTTP request and use self.request.sendall(response) to send your response
 
 
 def main():

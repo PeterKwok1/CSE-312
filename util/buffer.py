@@ -10,9 +10,6 @@ def recieve(socket, n_bytes):
     return received_data
 
 
-print("test")
-
-
 def buffer(socket):
     buffer_size = 8192
 
