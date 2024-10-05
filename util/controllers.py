@@ -3,7 +3,6 @@ from util.connection import db
 import json
 from util.escape_html import escape_html
 from bson.objectid import ObjectId
-import datetime
 from util.auth import (
     extract_credentials,
     validate_password,
