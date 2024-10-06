@@ -117,10 +117,16 @@ This course was highly reccomended by an industry professional friend.
         - it seems to work except that on large uploads, it throws broken pipe error, but still seems to work. 
         - small and large files can cause the error, but larger ones seem more consistent.
             - clean up and try profs bug solution / returning upon catching error. 
-            - try building simpler model of problem to exclude causes. 
         - try hls since googled "python brokenpipeerror video tag" turned up
             "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."
         - could be something to do with passing the socket to buffer() though i doubt it. 
+        - try building simpler model of problem to exclude causes. 
+            - test moving buffer logic into socket to "preserve" socket.
+            - test making a get request and using the response as html. 
+            - test intervals of request either by manual event activation or polling. 
+        - I think the error has to do with requests being made while data is still transferring. 
+            - Try a massive file. 
+
 
 
         

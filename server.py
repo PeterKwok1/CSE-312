@@ -45,16 +45,12 @@ app.add_route("GET", "/spotify", spotify)
 class MyTCPHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
+        # split and print data here as separate variable
 
         # parse request
         request = Request(buffer(self))
 
         response = Response()
-
-        # print("WORKS")
-
-        # if hasattr(request, "body"):
-        #     print(len(request.body.parts[0].content))
 
         # route request
         response_bytes = app.route_request(request, response)

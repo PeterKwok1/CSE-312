@@ -97,7 +97,7 @@ def get_all_messages(request, response):
         messages[i]["id"] = str(messages[i]["_id"])
         del messages[i]["_id"]
 
-    response.set_status(200)
+    # response.set_status(200)
     return response.send(messages)
 
 def post_message(request, response):
