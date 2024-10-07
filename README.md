@@ -105,44 +105,13 @@ This course was highly reccomended by an industry professional friend.
 
 ## Tickets
 - HW3
-    - Serve hangs and docker crashes on large file uploads
-    - Currently, can't seek video or audio because server doesn't handle range requests 
-        - https://stackoverflow.com/questions/8088364/html5-video-will-not-loop
     - A02
-        - prof's bug return solution?
+        - clean up buffer()
+            - remove recieve() prob    
         - buffer() hangs before adding remainder. the accumlated len of bytes recieved stop being divisble by 2048 before adding the remainder, meaning at some point recv() doesn't get 2048. my theory is that it's asking for the remainder after it's been recieved. 
             - however, i don't understand why, if it hangs, the data was still passed into request, routed, and processed, even the server didn't send a response. 
-        - clean up buffer()
-            - remove recieve() prob
-        - it seems to work except that on large uploads, it throws broken pipe error, but still seems to work. 
-        - small and large files can cause the error, but larger ones seem more consistent.
-            - clean up and try profs bug solution / returning upon catching error. 
-        - try hls since googled "python brokenpipeerror video tag" turned up
-            "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."
-        - could be something to do with passing the socket to buffer() though i doubt it. 
-        - try building simpler model of problem to exclude causes. 
-            - test moving buffer logic into socket to "preserve" socket.
-            - test making a get request and using the response as html. 
-            - test intervals of request either by manual event activation or polling. 
-        - I think the error has to do with requests being made while data is still transferring. 
-            - Try a massive file. 
-
-
-
-        
-            
-    
-        
-
-
-            
-            
-    
-
-    
-
-
-
-
-    
-
+        - brokenpipeerror
+            - seems large files are more likely to cause the bug
+            - I think the error has to do with requests being made while data is still transferring. 
+                - Try a massive file. 
+            - try hls since, "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."

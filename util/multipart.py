@@ -49,7 +49,7 @@ def parse_multipart(request: object) -> object:
         # extract headers
         headers = extract_headers(header)
         # extract name
-        # I don't see a reason to abstract this logic. I only need the name so far and it is slightly different than cookie parsing.
+        # I don't see a reason to abstract this logic so far. I only need the name and it is slightly different than cookie parsing.
         # Content-Disposition: form-data; name="field_one"
         name = (
             re.search("name=[^ ]+", headers["Content-Disposition"])
@@ -67,6 +67,8 @@ def parse_multipart(request: object) -> object:
     # return object
     return request.body
 
+
+# Ex:
 
 # POST /profile-pic HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nContent-Length: 246\r\nCache-Control: max-age=0\r\nsec-ch-ua: "Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"\r\nsec-ch-ua-mobile: ?0\r\nsec-ch-ua-platform: "Windows"\r\nUpgrade-Insecure-Requests: 1\r\nOrigin: http://localhost:8080\r\nContent-Type: multipart/form-data; boundary=----WebKitFormBoundaryoTlVpYBiYGonzLkT\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-User: ?1\r\nSec-Fetch-Dest: document\r\nReferer: http://localhost:8080/\r\nAccept-Encoding: gzip, deflate, br, zstd\r\nAccept-Language: en-US,en;q=0.9\r\n\r\n------WebKitFormBoundaryoTlVpYBiYGonzLkT\r\nContent-Disposition: form-data; name="field_one"\r\n\r\nwater\r\n------WebKitFormBoundaryoTlVpYBiYGonzLkT\r\nContent-Disposition: form-data; name="field_two"\r\n\r\nmelon\r\n------WebKitFormBoundaryoTlVpYBiYGonzLkT--\r\n
 

@@ -2,7 +2,6 @@ import urllib.parse
 from util.connection import db
 import json
 from util.escape_html import escape_html
-from bson.objectid import ObjectId
 from util.auth import (
     extract_credentials,
     validate_password,
@@ -12,6 +11,7 @@ from util.auth import (
     generate_xsrf,
     validate_xsrf,
 )
+from bson.objectid import ObjectId
 from util.spotify_utils import get_current_song
 import bcrypt
 import os

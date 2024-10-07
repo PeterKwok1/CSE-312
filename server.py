@@ -1,5 +1,5 @@
 import socketserver
-
+from util.buffer import buffer
 from util.router import Router
 from util.request import Request
 from util.response import Response
@@ -18,7 +18,6 @@ from util.controllers import (
     login_spotify,
     spotify,
 )
-from util.buffer import buffer
 
 app = Router()
 
@@ -45,10 +44,11 @@ app.add_route("GET", "/spotify", spotify)
 class MyTCPHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
-        # split and print data here as separate variable
+
+        data = buffer(self)
 
         # parse request
-        request = Request(buffer(self))
+        request = Request(data)
 
         response = Response()
 
