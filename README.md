@@ -113,5 +113,5 @@ This course was highly reccomended by an industry professional friend.
         - brokenpipeerror
             - seems large files are more likely to cause the bug
             - I think the error has to do with requests being made while data is still transferring. 
-                - Try a massive file. 
+                - Tried 23mb jpg with no issue.  
             - try hls since, "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."
