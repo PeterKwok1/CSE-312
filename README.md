@@ -106,8 +106,6 @@ This course was highly reccomended by an industry professional friend.
 ## Tickets
 - HW3
     - A02
-        - clean up buffer()
-            - remove recieve() prob    
         - buffer() hangs before adding remainder. the accumlated len of bytes recieved stop being divisble by 2048 before adding the remainder, meaning at some point recv() doesn't get 2048. my theory is that it's asking for the remainder after it's been recieved. 
             - however, i don't understand why, if it hangs, the data was still passed into request, routed, and processed, even the server didn't send a response. 
         - brokenpipeerror
@@ -115,3 +113,7 @@ This course was highly reccomended by an industry professional friend.
             - I think the error has to do with requests being made while data is still transferring. 
                 - Tried 23mb jpg with no issue.  
             - try hls since, "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."
+        - hls
+            - https://www.npmjs.com/package/video.js?activeTab=readme#quick-start
+            - https://youtu.be/UYa29P30154?t=2799
+            
