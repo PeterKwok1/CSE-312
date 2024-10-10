@@ -66,6 +66,8 @@ This course was highly reccomended by an industry professional friend.
     - https://www.youtube.com/watch?v=VywxIQ2ZXw4&t=3278s - Done
 - hashlib
     - https://www.youtube.com/watch?v=i-h0CtKde6w
+- ffmpeg 
+    - https://hlsbook.net/creating-a-master-playlist-with-ffmpeg/
 
 ## Notes
 - Security 
@@ -117,4 +119,5 @@ This course was highly reccomended by an industry professional friend.
         - hls
             - https://www.npmjs.com/package/video.js?activeTab=readme#quick-start
             - https://youtu.be/UYa29P30154?t=2799
+            - save hls playlist, index, and segments filenames based on original filename
             
