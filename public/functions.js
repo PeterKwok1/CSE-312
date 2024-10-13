@@ -89,7 +89,7 @@ function updateChat() {
             }
 
             // video.js manual setup 
-            videojs(document.querySelector('.video-js'), { controls: true, autoplay: true, muted: true, preload: 'auto' })
+            videojs(document.querySelector('.video-js'), { controls: true, autoplay: true, muted: true, preload: 'auto', width: "480", height: "360" })
         }
     }
     request.open("GET", "/chat-messages");
@@ -114,7 +114,7 @@ function welcome() {
     } else {
         const videoElem = document.getElementsByClassName('video-chat')[0];
         videoElem.parentElement.removeChild(videoElem);
-        setInterval(updateChat, 500);
+        setInterval(updateChat, 4000);
     }
 
     // use this line to start your video without having to click a button. Helpful for debugging

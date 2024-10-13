@@ -123,7 +123,8 @@ This course was highly reccomended by an industry professional friend.
             - https://youtu.be/UYa29P30154?t=2799
             - update post_media in controllers 
                 - update saved html to get caught by video.js
-            
+                - video.js isn't working with multiple videos. 
+                    - https://stackoverflow.com/questions/60435311/having-multiple-instances-of-video-js-javascript-video-player
             
             
                 

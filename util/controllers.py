@@ -71,13 +71,13 @@ def return_static_file(request, response):
     # thinking back, I could have added these as separate routes and abstracted the remove "/" logic. multiple public paths is probably fine. in hindsight, i'd have to break up return_static_file() for each.
     if re.search("^/public/image/", request.path):
         directory = "/public/image/"
-        filename = request.path.replace("/public/image/", "").replace("/", "")
+        filename = request.path.replace(directory, "").replace("/", "")
     elif re.search("^/public/user_media/", request.path):
         directory = "/public/user_media/"
-        filename = request.path.replace("/public/user_media/", "").replace("/", "")
+        filename = request.path.replace(directory, "").replace("/", "")
     elif re.search("^/public/", request.path):
         directory = "/public/"
-        filename = request.path.replace("/public/", "").replace("/", "")
+        filename = request.path.replace(directory, "").replace("/", "")
     request.path = directory + filename
 
     try:
@@ -245,7 +245,7 @@ def post_media(request, response):
         os.system(command)
 
         # save video.js html
-        message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><source src="/public/user_media/{filename}" type="video/mp4"></video>'
+        message = f'<video class="video-js"><source src="/public/user_media/{filename}_playlist.m3u8" type="application/vnd.apple.mpegurl"></source></video>'
     else:
         message = f'<img src="/public/user_media/{filename}" height="240" width="320" alt="{username}\'s media">'
 
