@@ -22,6 +22,7 @@ import uuid
 import requests
 from util.file_extension import get_file_extension
 
+
 def return_index(request, response):
     # open template
     template = open("./public/template_index.html", "rt")
@@ -67,7 +68,7 @@ def return_static_file(request, response):
 
     # validate
     # only allow intended subdirectories by removing /
-    # thinking back, I could have added these as separate routes and abstracted the remove "/" logic. multiple public paths is probably fine. in hindsight, i'd have to break up return_static_file() for each. 
+    # thinking back, I could have added these as separate routes and abstracted the remove "/" logic. multiple public paths is probably fine. in hindsight, i'd have to break up return_static_file() for each.
     if re.search("^/public/image/", request.path):
         directory = "/public/image/"
         filename = request.path.replace("/public/image/", "").replace("/", "")
@@ -100,6 +101,7 @@ def get_all_messages(request, response):
     # response.set_status(200)
     return response.send(messages)
 
+
 def post_message(request, response):
     message = json.loads(request.body)
 
@@ -113,8 +115,8 @@ def post_message(request, response):
 
     # user, spotify user, guest
     if user:
-        username = user["username"] 
-        if "access_token" in user: 
+        username = user["username"]
+        if "access_token" in user:
             current_song = get_current_song(user["access_token"])
         else:
             current_song = None
@@ -137,7 +139,7 @@ def post_message(request, response):
         {"_id": ObjectId(message_save_result.inserted_id)}
     )
 
-    # convert objectId to str to match json format 
+    # convert objectId to str to match json format
     message_saved["_id"] = str(message_saved["_id"])
 
     response.set_status(201)
@@ -213,31 +215,36 @@ def update_message_by_id(request, response):
     response.set_status(404)
     return response.send("Update Unsuccessful")
 
+
 def post_media(request, response):
     # auth
     user = validate_auth(request)
 
     # user, spotify user, guest
     if user:
-        username = user["username"] 
-        if "access_token" in user: 
+        username = user["username"]
+        if "access_token" in user:
             current_song = get_current_song(user["access_token"])
         else:
             current_song = None
     else:
         username = "Guest"
         current_song = None
-        
+
     # save file
+    filename = str(uuid.uuid4())
     file_extension = get_file_extension(request.body.parts[0].content)
 
-    filename = str(uuid.uuid4()) + "." + file_extension
-
-    # Images will be saved to container. 
-    with open(f"./public/user_media/{filename}", "wb") as user_media:
+    # Media will be saved to container.
+    with open(f"./public/user_media/{filename}.{file_extension}", "wb") as user_media:
         user_media.write(request.body.parts[0].content)
-    
+
     if file_extension == "mp4":
+        # convert to hls
+        command = f'ffmpeg -i "public/user_media/{filename}.{file_extension}" -map 0:0 -map 0:1 -map 0:0 -map 0:1 -s:v:0 640x360 -s:v:1 960x540 -c:a copy -var_stream_map "v:0,a:0 v:1,a:1" -master_pl_name {filename}_playlist.m3u8 -f hls -hls_list_size 0 public/user_media/{filename}_%v_index_.m3u8'
+        os.system(command)
+
+        # save video.js html
         message = f'<video height="240" width="320" controls autoplay muted alt="{username}\'s media"><source src="/public/user_media/{filename}" type="video/mp4"></video>'
     else:
         message = f'<img src="/public/user_media/{filename}" height="240" width="320" alt="{username}\'s media">'
@@ -245,7 +252,7 @@ def post_media(request, response):
     message_to_save = {
         "username": username,
         "current_song": current_song,
-        "message": message
+        "message": message,
     }
 
     # save message
@@ -253,8 +260,9 @@ def post_media(request, response):
 
     response.set_status(302)
     response.set_header({"Location": "/"})
-    
+
     return response.send()
+
 
 def register(request, response):
     # extract credentials
@@ -351,7 +359,6 @@ def spotify(request, response):
     if "error" in request.query:
         response.set_status(401)
         return response.send("Error login with spotify")
-    
 
     # get access token
     access_request_body = urllib.parse.urlencode(
@@ -362,23 +369,30 @@ def spotify(request, response):
         }
     )
     access_request_headers = {
-        "Authorization": "Basic" + " " + base64.b64encode(f"{os.environ["SPOTIFY_ID"]}:{os.environ["SPOTIFY_SECRET"]}".encode()).decode(),
+        "Authorization": "Basic"
+        + " "
+        + base64.b64encode(
+            f"{os.environ["SPOTIFY_ID"]}:{os.environ["SPOTIFY_SECRET"]}".encode()
+        ).decode(),
         "Content-Type": "application/x-www-form-urlencoded",
     }
-    access_response = requests.post("https://accounts.spotify.com/api/token", data=access_request_body, headers=access_request_headers)
-
+    access_response = requests.post(
+        "https://accounts.spotify.com/api/token",
+        data=access_request_body,
+        headers=access_request_headers,
+    )
 
     if not access_response.status_code == 200:
         return response.send("Login with spotify failed")
-    
+
     access_response_body = access_response.json()
     access_token = access_response_body["access_token"]
 
     # get user profile
-    user_request_headers = {
-        "Authorization": "Bearer" + " " + access_token
-    }
-    user_response = requests.get("https://api.spotify.com/v1/me", headers=user_request_headers)
+    user_request_headers = {"Authorization": "Bearer" + " " + access_token}
+    user_response = requests.get(
+        "https://api.spotify.com/v1/me", headers=user_request_headers
+    )
     user_response_body = user_response.json()
     email = user_response_body["email"]
 
@@ -387,20 +401,18 @@ def spotify(request, response):
     if not user:
         db.users.insert_one({"username": email, "access_token": access_token})
     else:
-        db.users.update_one({"username": email}, {"$set": {"access_token": access_token}})
-    
+        db.users.update_one(
+            {"username": email}, {"$set": {"access_token": access_token}}
+        )
+
     test = db.users.find_one({"username": email})
 
     # generate auth
     response = generate_auth(response, email)
 
-    # spotify access tokens expire in 1 hour, so i'd likely have to refresh it using a refresh token if expired during validation. 
+    # spotify access tokens expire in 1 hour, so i'd likely have to refresh it using a refresh token if expired during validation.
 
     response.set_status(302)
     response.set_header({"Location": "/"})
 
     return response.send()
-
-    
-
-    

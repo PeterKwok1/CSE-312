@@ -21,6 +21,8 @@ content_type_key = {
     "png": "image/png",
     "gif": "image/gif",
     "mp4": "video/mp4",
+    "m3u8": "application/vnd.apple.mpegurl",
+    "ts": "video/mp2t",
 }
 
 

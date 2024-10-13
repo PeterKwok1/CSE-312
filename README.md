@@ -121,9 +121,10 @@ This course was highly reccomended by an industry professional friend.
         - hls
             - https://www.npmjs.com/package/video.js?activeTab=readme#quick-start
             - https://youtu.be/UYa29P30154?t=2799
-            - test 
-                - save hls playlist, index, and segments filenames based on original filename
-            - add file extensions to content-type key
+            - update post_media in controllers 
+                - update saved html to get caught by video.js
+            
+            
             
                 
             

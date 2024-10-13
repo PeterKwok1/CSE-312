@@ -87,6 +87,9 @@ function updateChat() {
             for (const message of messages) {
                 addMessageToChat(message);
             }
+
+            // video.js manual setup 
+            videojs(document.querySelector('.video-js'), { controls: true, autoplay: true, muted: true, preload: 'auto' })
         }
     }
     request.open("GET", "/chat-messages");
