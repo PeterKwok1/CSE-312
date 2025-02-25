@@ -71,6 +71,25 @@ This course was highly reccomended by an industry professional friend.
 - video.js
     - https://videojs.com/guides/setup/#creating-a-player
 
+## Tickets
+- HW3
+    - A02
+        - buffer() hangs before adding remainder. the accumlated len of bytes recieved stop being divisble by 2048 before adding the remainder, meaning at some point recv() doesn't get 2048. my theory is that it's asking for the remainder after it's been recieved. 
+            - however, i don't understand why, if it hangs, the data was still passed into request, routed, and processed, even the server didn't send a response. 
+        - brokenpipeerror
+            - seems large files are more likely to cause the bug
+            - I think the error has to do with requests being made while data is still transferring. 
+                - Maybe chrome closes the connection once a new, identitical, request is made. 
+                - Tried 23mb jpg with no issue. 
+            - try hls since, "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."
+        - hls
+            - https://www.npmjs.com/package/video.js?activeTab=readme#quick-start
+            - https://youtu.be/UYa29P30154?t=2799
+            - update post_media in controllers 
+                - update saved html to get caught by video.js
+                - video.js isn't working with multiple videos. 
+                    - https://stackoverflow.com/questions/60435311/having-multiple-instances-of-video-js-javascript-video-player
+
 ## Notes
 - Security 
     - HTML Injection 
@@ -105,27 +124,4 @@ This course was highly reccomended by an industry professional friend.
             - invalidate at some time server side. 
                 - my thinking is to store it with a date and check that date upon validating auth. the theory is that all interactions that require auth will validate auth, including for example a home page, so there will be no leaks.
         - XSRF token
-            - not as sensitive as auth token but should store hash too. 
-
-## Tickets
-- HW3
-    - A02
-        - buffer() hangs before adding remainder. the accumlated len of bytes recieved stop being divisble by 2048 before adding the remainder, meaning at some point recv() doesn't get 2048. my theory is that it's asking for the remainder after it's been recieved. 
-            - however, i don't understand why, if it hangs, the data was still passed into request, routed, and processed, even the server didn't send a response. 
-        - brokenpipeerror
-            - seems large files are more likely to cause the bug
-            - I think the error has to do with requests being made while data is still transferring. 
-                - Maybe chrome closes the connection once a new, identitical, request is made. 
-                - Tried 23mb jpg with no issue. 
-            - try hls since, "Buffer Issues: If the receiver's buffer fills up and it can't process data fast enough, it might close the connection, leading to a BrokenPipeError on the sender."
-        - hls
-            - https://www.npmjs.com/package/video.js?activeTab=readme#quick-start
-            - https://youtu.be/UYa29P30154?t=2799
-            - update post_media in controllers 
-                - update saved html to get caught by video.js
-                - video.js isn't working with multiple videos. 
-                    - https://stackoverflow.com/questions/60435311/having-multiple-instances-of-video-js-javascript-video-player
-            
-            
-                
-            
+            - not as sensitive as auth token but should store hash too.
